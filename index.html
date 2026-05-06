@@ -37,6 +37,7 @@ tailwind.config = {
   .view-section { display:none; animation:fadeUp 0.4s ease; }
   .view-section.active { display:block; }
   @keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+  
   .custom-scroll::-webkit-scrollbar { width:5px; height:5px; }
   .custom-scroll::-webkit-scrollbar-thumb { background:rgba(91,146,165,.25); border-radius:8px; }
   .no-scroll::-webkit-scrollbar { display:none; }
@@ -337,7 +338,6 @@ tailwind.config = {
             <div class="text-ink/50 text-[10px] mt-1.5 border-t border-ocean/10 pt-1.5 space-y-1.5">
               <div class="flex justify-between items-center"><span>預約號碼</span><span class="font-sans font-bold tracking-wider text-ink/80 text-[11px]">247193404</span></div>
               <div class="flex justify-between items-center"><span>聯絡電話</span><span class="font-sans font-bold tracking-wider text-ink/80 text-[11px]">098-996-3414</span></div>
-              <div class="flex justify-between items-center"><span>總費用</span><span class="font-sans font-bold tracking-wider text-coral text-[11px]">¥40,760</span></div>
             </div>
             <button onclick="copyText('247193404')" class="absolute top-2 right-2 text-xs w-6 h-6 flex items-center justify-center rounded bg-white text-ocean hover:bg-ocean hover:text-white transition shadow-sm" title="複製預約號碼"><i class="fas fa-copy"></i></button>
           </div>
