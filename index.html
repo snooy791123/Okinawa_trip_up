@@ -289,8 +289,8 @@ tailwind.config = {
       <p class="text-ink/60 text-sm">記下旅途中的靈感、電話號碼、住宿資訊等重要事項。</p>
     </div>
     
-    <!-- Quick Notes 4 Columns -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-5">
+    <!-- Quick Notes Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-5">
       <!-- 1. 住宿資訊 -->
       <div class="bg-white border border-ocean/10 rounded-2xl p-5">
         <h3 class="font-heading font-bold text-ink mb-3"><i class="fas fa-hotel text-ocean mr-2"></i>住宿資訊</h3>
@@ -356,7 +356,39 @@ tailwind.config = {
               <div class="flex justify-between items-center"><span>停車場A・B</span><span class="font-sans font-bold tracking-wide text-ink/70">#9058502</span></div>
             </div>
             <div class="mt-2 text-[10px] text-ink/60 bg-white/60 p-2 rounded leading-relaxed">
-              📍 <b>停車場導航</b>：設定導航至「Lawson 海洋博公園前店」，沿途依循「臨時駐車場A・B」指標進入町道16號線。<br>🕒 14:00開放，搭乘免費接駁車前往會場(營運至23:00)。
+              📍 <b>停車場導航</b>：點擊導航至 <a href="https://google.com/maps/search/?api=1&query=%E6%B5%B7%E6%B4%8B%E5%8D%9A%E5%85%AC%E5%9C%92+%E8%87%A8%E6%99%82%E9%A7%90%E8%BB%8A%E5%A0%B4" target="_blank" class="text-ocean font-bold underline hover:text-ocean/70 transition inline-flex items-baseline gap-0.5"><i class="fas fa-map-marker-alt text-[8px]"></i>「臨時駐車場A・B」</a> (由Lawson前路口轉進町道16號線)。<br>🕒 14:00開放，搭乘免費接駁車前往會場(營運至23:00)。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. 入境 VJW 資訊 -->
+      <div class="bg-white border border-ocean/10 rounded-2xl p-5">
+        <h3 class="font-heading font-bold text-ink mb-3"><i class="fas fa-passport text-sky mr-2"></i>入境 VJW 填寫</h3>
+        <div class="space-y-2 text-sm">
+          <div class="bg-paperDark rounded-lg px-3 py-2 relative">
+            <div class="font-bold text-ink">聯絡處 (HOTEL STRATA NAHA)</div>
+            <div class="text-ink/50 text-[10px] mt-1.5 border-t border-ocean/10 pt-1.5 space-y-1.5">
+              <div class="flex justify-between items-center"><span>郵遞區號</span><span class="font-sans font-bold tracking-wider text-ink/80 text-[11px]">9000013</span></div>
+              <div class="flex justify-between items-center"><span>都道府縣</span><span class="font-sans font-bold tracking-wider text-ink/80 text-[11px]">OKINAWA KEN</span></div>
+              <div class="flex justify-between items-center"><span>市區町村</span><span class="font-sans font-bold tracking-wider text-ink/80 text-[11px]">NAHA SHI</span></div>
+              <div class="flex justify-between items-center"><span>町字番地</span><span class="font-sans font-bold tracking-wider text-ink/80 text-[11px]">1-19-8</span></div>
+              <div class="flex justify-between items-center"><span>聯絡電話</span><span class="font-sans font-bold tracking-wider text-ink/80 text-[11px]">0988607400</span></div>
+            </div>
+            <button onclick="copyText('OKINAWA KEN NAHA SHI 1-19-8')" class="absolute top-2 right-2 text-xs w-6 h-6 flex items-center justify-center rounded bg-white text-ocean hover:bg-ocean hover:text-white transition shadow-sm" title="複製英文地址"><i class="fas fa-copy"></i></button>
+          </div>
+          
+          <div class="bg-paperDark rounded-lg px-3 py-2 relative">
+            <div class="font-bold text-ink text-xs">飯店日文資訊</div>
+            <div class="text-ink/60 text-[11px] mt-1.5 space-y-1.5">
+              <div class="flex justify-between items-center border-b border-ocean/5 pb-1.5">
+                <span>ホテルストレータ那覇</span>
+                <button onclick="copyText('ホテルストレータ那覇')" class="text-ocean hover:text-ocean/70 transition" title="複製日文飯店名"><i class="fas fa-copy"></i></button>
+              </div>
+              <div class="flex justify-between items-start pt-0.5">
+                <span class="pr-2 leading-relaxed">〒900-0013<br>沖縄県那覇市牧志1丁目19番8号</span>
+                <button onclick="copyText('〒900-0013 沖縄県那覇市牧志1丁目19番8号')" class="text-ocean hover:text-ocean/70 transition mt-1" title="複製日文地址"><i class="fas fa-copy"></i></button>
+              </div>
             </div>
           </div>
         </div>
@@ -558,7 +590,7 @@ const DAYS_DATA = [
       {time:'10:04', text:'道の駅 許田休息站', icon:'🏪', q:'道の駅 許田 名護'},
       {time:'11:24', text:'古宇利島 (古宇利大橋)', icon:'🏝️', q:'古宇利島'},
       {time:'14:00', text:'沖繩美麗海水族館', icon:'🐬', q:'沖繩美麗海水族館'},
-      {time:'19:00', text:'海洋博煙火大會 (棧敷席A / 停車場A・B)', icon:'🎆', q:'Lawson 海洋博公園前店'}
+      {time:'19:00', text:'海洋博煙火大會 (棧敷席A / 停車場A・B)', icon:'🎆', q:'海洋博公園 臨時駐車場'}
     ],
     places:[
       {name:'Kouri Shrimp', area:'古宇利島', rating:4.4, type:'food', tags:'蒜香蝦', desc:'夏威夷經典蒜香奶油蝦配上白飯，香氣濃郁停不下來。', recommend:'原味蒜蓉蝦蝦飯'},
