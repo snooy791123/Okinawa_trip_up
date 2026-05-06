@@ -43,7 +43,6 @@ tailwind.config = {
   .no-scroll { -ms-overflow-style:none; scrollbar-width:none; }
   .timeline-dot::before { content:''; position:absolute; left:1.1rem; top:2.5rem; bottom:-1rem; width:2px; border-left:2px dashed rgba(91,146,165,.3); }
   .timeline-item:last-child .timeline-dot::before { display:none; }
-  
   input[type=checkbox] { accent-color:var(--mint); cursor:pointer; }
   .checked-label span { text-decoration:line-through; opacity:.4; }
   .active-sidebar { background:white !important; box-shadow:2px 4px 12px rgba(0,0,0,.06) !important; color:var(--ink) !important; }
@@ -277,21 +276,22 @@ tailwind.config = {
         <span id="progress-text" class="text-mint">0%</span>
       </div>
       <div class="w-full bg-paperDark rounded-full h-2">
-      <div id="progress-bar" class="bg-mint h-2 rounded-full transition-all duration-500 w-0"></div>
+        <div id="progress-bar" class="bg-mint h-2 rounded-full transition-all duration-500 w-0"></div>
+      </div>
     </div>
-  </div>
-  <div id="checklist-container" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4"></div>
-</section>
+    <div id="checklist-container" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4"></div>
+  </section>
 
-<!-- VIEW: NOTES -->
-<section id="view-notes" class="view-section max-w-4xl mx-auto">
-  <div class="mb-6">
-    <h2 class="font-heading font-black text-3xl text-ink mb-2">旅行備忘錄</h2>
+  <!-- VIEW: NOTES -->
+  <section id="view-notes" class="view-section max-w-5xl mx-auto">
+    <div class="mb-6">
+      <h2 class="font-heading font-black text-3xl text-ink mb-2">旅行備忘錄</h2>
       <p class="text-ink/60 text-sm">記下旅途中的靈感、電話號碼、住宿資訊等重要事項。</p>
     </div>
     
-    <!-- Quick Notes -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-5">
+    <!-- Quick Notes 4 Columns -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-5">
+      <!-- 1. 住宿資訊 -->
       <div class="bg-white border border-ocean/10 rounded-2xl p-5">
         <h3 class="font-heading font-bold text-ink mb-3"><i class="fas fa-hotel text-ocean mr-2"></i>住宿資訊</h3>
         <div class="space-y-2 text-sm">
@@ -299,40 +299,65 @@ tailwind.config = {
             <div class="font-bold text-ink">HOTEL STRATA NAHA</div>
             <div class="text-ink/50 text-xs mt-0.5">7/2 15:00 入住 - 7/6 11:00 退房</div>
             <div class="text-ink/50 text-[10px] mt-1.5 border-t border-ocean/10 pt-1.5 space-y-1">
-              <div class="flex justify-between"><span>Twin Room with Sofa</span><span class="font-mono text-ink/70">#1711854072</span></div>
-              <div class="flex justify-between"><span>Standard Twin Room</span><span class="font-mono text-ink/70">#1711854779</span></div>
-              <div class="flex justify-between"><span>Standard Twin Room</span><span class="font-mono text-ink/70">#1711855268</span></div>
+              <div class="flex justify-between"><span>Twin Room with Sofa</span><span class="font-sans font-bold tracking-wide text-ink/70">#1711854072</span></div>
+              <div class="flex justify-between"><span>Standard Twin</span><span class="font-sans font-bold tracking-wide text-ink/70">#1711854779</span></div>
+              <div class="flex justify-between"><span>Standard Twin</span><span class="font-sans font-bold tracking-wide text-ink/70">#1711855268</span></div>
             </div>
-            <button onclick="copyText('Hotel Strata Naha')" class="absolute top-2 right-2 text-xs w-6 h-6 flex items-center justify-center rounded bg-white text-ocean hover:bg-ocean hover:text-white transition shadow-sm"><i class="fas fa-copy"></i></button>
+            <button onclick="copyText('Hotel Strata Naha')" class="absolute top-2 right-2 text-xs w-6 h-6 flex items-center justify-center rounded bg-white text-ocean hover:bg-ocean hover:text-white transition shadow-sm" title="複製飯店名稱"><i class="fas fa-copy"></i></button>
           </div>
         </div>
       </div>
+
+      <!-- 2. 航班資訊 -->
       <div class="bg-white border border-ocean/10 rounded-2xl p-5">
         <h3 class="font-heading font-bold text-ink mb-3"><i class="fas fa-plane text-coral mr-2"></i>航班資訊</h3>
         <div class="space-y-2 text-sm">
           <div class="bg-paperDark rounded-lg px-3 py-2">
             <div class="font-bold text-ink">去程：7/2 台灣虎航 IT728</div>
-            <div class="text-ink/50 text-xs mt-0.5">高雄 KHH 16:15 → 那霸 OKA 18:40</div>
+            <div class="text-ink/50 text-xs mt-0.5">高雄 16:15 → 那霸 18:40</div>
           </div>
           <div class="bg-paperDark rounded-lg px-3 py-2 relative">
             <div class="font-bold text-ink">回程：7/6 中華航空 CI133</div>
-            <div class="text-ink/50 text-xs mt-0.5">那霸 OKA 19:45 → 高雄 KHH 20:30</div>
-            <div class="text-ink/50 text-[10px] mt-1.5 border-t border-ocean/10 pt-1.5">航空訂位代號: EQG9IH</div>
+            <div class="text-ink/50 text-xs mt-0.5">那霸 19:45 → 高雄 20:30</div>
+            <div class="text-ink/50 text-[10px] mt-1.5 border-t border-ocean/10 pt-1.5 flex justify-between items-center">
+              <span>華航訂位代號</span><span class="font-sans font-bold tracking-wide text-ink/70">EQG9IH</span>
+            </div>
+            <button onclick="copyText('EQG9IH')" class="absolute top-2 right-2 text-xs w-6 h-6 flex items-center justify-center rounded bg-white text-ocean hover:bg-ocean hover:text-white transition shadow-sm" title="複製訂位代號"><i class="fas fa-copy"></i></button>
           </div>
         </div>
       </div>
+
+      <!-- 3. 租車資訊 -->
       <div class="bg-white border border-ocean/10 rounded-2xl p-5">
         <h3 class="font-heading font-bold text-ink mb-3"><i class="fas fa-car text-mint mr-2"></i>租車資訊</h3>
         <div class="space-y-2 text-sm">
           <div class="bg-paperDark rounded-lg px-3 py-2 relative">
             <div class="font-bold text-ink">Kuruca租車 (那霸機場店)</div>
             <div class="text-ink/50 text-xs mt-0.5">7/3 09:00 取車 - 7/6 16:00 還車</div>
-            <div class="text-ink/50 text-[10px] mt-1.5 border-t border-ocean/10 pt-1.5 space-y-1">
-              <div class="flex justify-between"><span>預約號碼</span><span class="font-sans font-bold tracking-wide text-ink/70">#247193404</span></div>
-              <div class="flex justify-between"><span>總費用 (含稅)</span><span class="font-sans font-bold tracking-wide text-ink/70">¥40,760</span></div>
-              <div class="flex justify-between"><span>電話</span><span class="font-sans font-bold tracking-wide text-ink/70">098-996-3414</span></div>
+            <div class="text-ink/50 text-[10px] mt-1.5 border-t border-ocean/10 pt-1.5 space-y-1.5">
+              <div class="flex justify-between items-center"><span>預約號碼</span><span class="font-sans font-bold tracking-wider text-ink/80 text-[11px]">247193404</span></div>
+              <div class="flex justify-between items-center"><span>聯絡電話</span><span class="font-sans font-bold tracking-wider text-ink/80 text-[11px]">098-996-3414</span></div>
+              <div class="flex justify-between items-center"><span>總費用</span><span class="font-sans font-bold tracking-wider text-coral text-[11px]">¥40,760</span></div>
             </div>
             <button onclick="copyText('247193404')" class="absolute top-2 right-2 text-xs w-6 h-6 flex items-center justify-center rounded bg-white text-ocean hover:bg-ocean hover:text-white transition shadow-sm" title="複製預約號碼"><i class="fas fa-copy"></i></button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 4. 活動票券資訊 -->
+      <div class="bg-white border border-ocean/10 rounded-2xl p-5">
+        <h3 class="font-heading font-bold text-ink mb-3"><i class="fas fa-ticket-alt text-sand mr-2"></i>活動票券</h3>
+        <div class="space-y-2 text-sm">
+          <div class="bg-paperDark rounded-lg px-3 py-2 relative">
+            <div class="font-bold text-ink">海洋博美麗海煙火大會</div>
+            <div class="text-ink/50 text-xs mt-0.5">7/4 (六) VELTRA 預訂</div>
+            <div class="text-ink/50 text-[10px] mt-1.5 border-t border-ocean/10 pt-1.5 space-y-1">
+              <div class="flex justify-between items-center"><span>棧敷席A (遊玩濱)</span><span class="font-sans font-bold tracking-wide text-ink/70">#9058476</span></div>
+              <div class="flex justify-between items-center"><span>停車場A・B</span><span class="font-sans font-bold tracking-wide text-ink/70">#9058502</span></div>
+            </div>
+            <div class="mt-2 text-[10px] text-ink/60 bg-white/60 p-2 rounded leading-relaxed">
+              📍 <b>停車場導航</b>：設定導航至「Lawson 海洋博公園前店」，沿途依循「臨時駐車場A・B」指標進入町道16號線。<br>🕒 14:00開放，搭乘免費接駁車前往會場(營運至23:00)。
+            </div>
           </div>
         </div>
       </div>
@@ -453,9 +478,9 @@ const DAYS_DATA = [
     intro:'抵達沖繩的第一天，重點在於安頓與感受市區活力。包含機場到市區動線，以及國際通周邊不可錯過的美食與宵夜選擇。',
     tips:['⚠️ 注意日本靠左行駛！租車前再確認一次','💴 機場有換錢所，但匯率可能略差，建議台灣換好','📶 入境後立刻開啟網路卡確認可用','🧳 行李可寄放機場，輕裝到國際通逛更舒適'],
     itinerary:[
-      {time:'16:15', text:'高雄機場 (IT728)', icon:'🛫', q:'高雄國際機場 KHH'},
-      {time:'18:40', text:'那霸機場 (OKA)', icon:'🛬', q:'那霸機場'},
-      {time:'19:08', text:'HOTEL STRATA NAHA (入住)', icon:'🏨', q:'Hotel Strata Naha'},
+      {time:'16:15', text:'高雄國際機場 (IT728起飛)', icon:'🛫', q:'高雄國際機場 KHH'},
+      {time:'18:40', text:'那霸機場 (OKA) 抵達', icon:'🛬', q:'那霸機場'},
+      {time:'19:08', text:'Hotel Strata Naha (入住)', icon:'🏨', q:'Hotel Strata Naha'},
       {time:'19:48', text:'國際通散步購物', icon:'🛍️', q:'國際通 那霸'},
       {time:'22:27', text:'返回酒店休息', icon:'🌙', q:'Hotel Strata Naha'}
     ],
@@ -488,8 +513,8 @@ const DAYS_DATA = [
     intro:'第二天行程豐富！離開市區感受中部風情，涵蓋海灘漫步、水下體驗、文化村落，以阿古豬火鍋完美收尾。',
     tips:['🤿 潛水前一晚不要飲酒，早餐吃清淡','🚗 美國村停車場週末很搶手，可停稍遠的停車場再走過來','🌅 BANTA CAFE 建議傍晚前抵達欣賞夕陽','🛒 Rycom 比那霸大很多，記得帶大購物袋'],
     itinerary:[
-      {time:'08:30', text:'那霸STRATA酒店出發', icon:'🚶', q:'Hotel Strata Naha'},
-      {time:'09:00', text:'Kuruca租車 取車 (豐見城)', icon:'🚙', q:'沖縄県豊見城市我那覇295-4'},
+      {time:'08:30', text:'搭車前往那霸機場', icon:'🚕', q:'那霸機場'},
+      {time:'09:00', text:'Kuruca租車 取車', icon:'🚗', q:'沖繩縣豐見城市我那霸295-4'},
       {time:'09:42', text:'安良波海灘', icon:'🏖️', q:'安良波海灘 北谷'},
       {time:'10:19', text:'美浜美國村', icon:'🎡', q:'美浜美國村 北谷'},
       {time:'11:53', text:'A&W 美浜店午餐', icon:'🍔', q:'A&W 美浜店 沖繩'},
@@ -498,9 +523,8 @@ const DAYS_DATA = [
       {time:'16:01', text:'BANTA CAFE 夕陽咖啡', icon:'☕', q:'Hoshino Resorts BANTA CAFE'},
       {time:'17:41', text:'AEON MALL Rycom', icon:'🏬', q:'AEON MALL Okinawa Rycom'},
       {time:'19:24', text:'Itoya 阿古豬火鍋晚餐', icon:'🍲', q:'Itoya 阿古豬火鍋 沖繩'},
-      {time:'22:20', text:'返回 STRATA 酒店', icon:'🏨', q:'Hotel Strata Naha'}
+      {time:'22:20', text:'返回 Hotel Strata Naha', icon:'🏨', q:'Hotel Strata Naha'}
     ],
-    tips:['🤿 潛水前一晚不要飲酒，早餐吃清淡','🚗 美國村停車場週末很搶手','🌅 BANTA CAFE 建議傍晚前抵達欣賞夕陽','🛒 Rycom 比那霸大很多，帶大購物袋'],
     places:[
       {name:'Taco Rice Cafe Kijimuna', area:'美國村', rating:4.4, type:'food', tags:'塔可飯', desc:'將沖繩美食「塔可飯」加上滑嫩歐姆蛋，超人氣創意料理。', recommend:'酪梨歐姆塔可飯'},
       {name:'Zhyvago Coffee Works', area:'美國村', rating:4.6, type:'food', tags:'海景咖啡', desc:'美國村最具質感的工業風咖啡館，伴隨無敵海景。', recommend:'冰拿鐵、手工巧克力軟餅乾'},
@@ -528,13 +552,13 @@ const DAYS_DATA = [
     title:'北部絕景與煙火',
     subtitle:'一路向北！許田休息站、古宇利島，下午美麗海水族館，晚上絢爛煙火。',
     intro:'深入沖繩北部，最清澈的海水(古宇利島)與必訪的美麗海水族館。傍晚留在海洋博公園享受夏日煙火。',
-    tips:['🅿️ 美麗海水族館假日人多，建議一開館就進場','🐳 鯨鯊餵食時間通常是10:00、14:00，可事先查詢當日時間','🏝️ 古宇利島停車費約500円/次','🎆 煙火結束後道路非常擁擠，可以等半小時再離開'],
+    tips:['🅿️ 煙火停車場A・B：14:00開放，請導航至「Lawson海洋博公園前店」轉進町道16號線，循指標入場轉乘免費接駁車','🐳 鯨鯊餵食時間通常是10:00、14:00，可事先查詢當日時間','🎆 煙火大會已預約「棧敷席A(遊玩濱)」，記得手機出示VELTRA憑證','🚗 煙火結束後道路非常擁擠，接駁車營運至23:00，可稍作停留避開人潮'],
     itinerary:[
       {time:'08:00', text:'那霸出發北上', icon:'🚗', q:'Hotel Strata Naha'},
       {time:'10:04', text:'道の駅 許田休息站', icon:'🏪', q:'道の駅 許田 名護'},
       {time:'11:24', text:'古宇利島 (古宇利大橋)', icon:'🏝️', q:'古宇利島'},
       {time:'14:00', text:'沖繩美麗海水族館', icon:'🐬', q:'沖繩美麗海水族館'},
-      {time:'19:00', text:'海洋博公園 (20:00煙火)', icon:'🎆', q:'海洋博公園'}
+      {time:'19:00', text:'海洋博煙火大會 (棧敷席A / 停車場A・B)', icon:'🎆', q:'Lawson 海洋博公園前店'}
     ],
     places:[
       {name:'Kouri Shrimp', area:'古宇利島', rating:4.4, type:'food', tags:'蒜香蝦', desc:'夏威夷經典蒜香奶油蝦配上白飯，香氣濃郁停不下來。', recommend:'原味蒜蓉蝦蝦飯'},
@@ -599,16 +623,16 @@ const DAYS_DATA = [
     intro:'最後一天體驗在地市井文化與歷史古蹟。從牧志市場的早晨開始，走訪首里城，最後至機場採購伴手禮，完美句點。',
     tips:['⏰ 首里城開放時間：8:30-19:00（7月）','🦀 牧志市場1樓挑好活海鮮，拿到2樓代烹，服務費每人約300円','✈️ 建議至少提前2.5小時到那霸機場（國際線）','🛍️ 機場免稅店可以排最後血拚，抵達後先check-in'],
     itinerary:[
-      {time:'09:00', text:'STRATA 酒店退房', icon:'🏨', q:'Hotel Strata Naha'},
+      {time:'09:00', text:'Hotel Strata Naha (退房)', icon:'🏨', q:'Hotel Strata Naha'},
       {time:'09:45', text:'第一牧志公設市場', icon:'🦀', q:'第一牧志公設市場'},
       {time:'10:56', text:'Pork Tamago Onigiri', icon:'🍙', q:'Pork Tamago Onigiri Makishi Market'},
       {time:'11:27', text:'沖縄とんかつ小やじ 午餐', icon:'🍱', q:'沖縄とんかつ小やじ那覇店'},
       {time:'12:52', text:'西來院 (達磨寺)', icon:'⛩️', q:'西來院 那霸'},
       {time:'13:41', text:'首里城公園', icon:'🏯', q:'首里城'},
-      {time:'16:00', text:'Kuruca租車 還車', icon:'🚙', q:'沖縄県豊見城市我那覇295-4'},
-      {time:'17:30', text:'抵達那霸機場 (OKA)', icon:'🛫', q:'那霸機場'},
-      {time:'19:45', text:'搭乘 CI133 班機返台', icon:'✈️', q:'那霸機場'},
-      {time:'20:30', text:'抵達高雄國際機場', icon:'🛬', q:'高雄國際機場'}
+      {time:'16:00', text:'Kuruca租車 還車', icon:'🚗', q:'沖繩縣豐見城市我那霸295-4'},
+      {time:'17:00', text:'那霸機場 (OKA)', icon:'🛫', q:'那霸機場'},
+      {time:'19:45', text:'中華航空 CI133 起飛', icon:'✈️', q:'那霸機場'},
+      {time:'20:30', text:'高雄國際機場 (KHH) 抵達', icon:'🛬', q:'高雄國際機場'}
     ],
     places:[
       {name:'豬肉蛋飯糰 本店', area:'牧志市場', rating:4.4, type:'food', tags:'沖繩飯糰', desc:'最經典的排隊名店，熱騰騰的午餐肉與厚煎蛋完美結合。', recommend:'炸蝦豬肉蛋飯糰'},
@@ -762,9 +786,6 @@ async function fetchWeatherAndMarine() {
 function renderWeatherChart(data) {
   const ctx = document.getElementById('weatherChart').getContext('2d');
   const dates = data.time.map(d => d.slice(5).replace('-','/'));
-  
-  // Highlight trip days
-  const tripStart = '07/02', tripEnd = '07/06';
   
   new Chart(ctx, {
     type: 'line',
@@ -928,7 +949,6 @@ function toggleWishlist(dayId, placeIndex) {
   localStorage.setItem('ok_wishlist', JSON.stringify(state.wishlist));
   updateWishlistCount();
   
-  // Update button in DOM if visible
   const btn = document.querySelector(`[data-wish="${key}"]`);
   if(btn) {
     const isWished = state.wishlist.some(w => w.key === key);
@@ -937,7 +957,6 @@ function toggleWishlist(dayId, placeIndex) {
     btn.classList.toggle('text-ink/30', !isWished);
   }
   
-  // Re-render wishlist if visible
   if(state.currentView === 'view-wishlist') renderWishlist();
 }
 
@@ -974,7 +993,6 @@ function renderDayView(dayId) {
   const day = DAYS_DATA.find(d => d.id === dayId);
   if(!day) return;
   
-  // Header
   document.getElementById('day-header').innerHTML = `
     <div class="w-16 h-16 text-white rounded-2xl flex flex-col items-center justify-center flex-shrink-0 transform rotate-2 shadow-md" style="background:${day.hex}">
       <span class="font-heading font-black text-xl leading-none">${day.num}</span>
@@ -986,7 +1004,6 @@ function renderDayView(dayId) {
       <p class="font-serif text-ink/60 text-sm leading-relaxed max-w-2xl">${day.intro}</p>
     </div>`;
   
-  // Timeline
   const tl = document.getElementById('day-timeline');
   tl.innerHTML = day.itinerary.map(it => `
     <div class="timeline-item relative pl-10">
@@ -1001,17 +1018,14 @@ function renderDayView(dayId) {
       </div>
     </div>`).join('');
   
-  // Tips
   const tipsEl = document.getElementById('day-tips');
   if(day.tips) {
     tipsEl.innerHTML = day.tips.map(t => `<div class="flex items-start gap-2 bg-paperDark/60 rounded-xl px-3 py-2 text-xs">${t}</div>`).join('');
   }
   
-  // Day note
   const dnEl = document.getElementById('day-note');
   if(dnEl) dnEl.value = state.dayNotes[dayId] || '';
   
-  // Map links
   const mapLinks = document.getElementById('map-links');
   mapLinks.innerHTML = day.itinerary.map((it,i) => `
     <a href="https://google.com/maps/search/?api=1&query=${encodeURIComponent(it.q)}" target="_blank"
@@ -1024,11 +1038,8 @@ function renderDayView(dayId) {
       <i class="fas fa-external-link-alt ml-auto text-xs text-ink/30"></i>
     </a>`).join('');
   
-  // Places
   setupPlaceFilters(day);
   renderPlaces(day);
-  
-  // Tab init
   switchDayTab('itinerary');
 }
 
@@ -1154,17 +1165,14 @@ function performSearch(query) {
     }).join('');
   }
   
-  // Switch to search view without nav highlight change
   document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
   document.getElementById('view-search').classList.add('active');
   state.currentView = 'view-search';
 }
 
-// ===================== WISHLIST VIEW TRIGGER =====================
 document.querySelector('.nav-btn[data-target="view-wishlist"]')?.addEventListener('click', renderWishlist);
 document.querySelector('.mobile-btn[data-target="view-wishlist"]')?.addEventListener('click', renderWishlist);
 
-// Patch: also render wishlist on any click that goes to view-wishlist
 const origSwitch = switchView;
 window.switchView = function(target, dayId) {
   origSwitch(target, dayId);
