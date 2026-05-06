@@ -63,13 +63,6 @@ tailwind.config = {
   /* Toast */
   #toast { position:fixed; bottom:7rem; left:50%; transform:translateX(-50%) translateY(20px); background:var(--ink); color:white; padding:.6rem 1.4rem; border-radius:99px; font-size:.8rem; font-weight:700; opacity:0; transition:all .3s; z-index:999; pointer-events:none; }
   #toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
-
-  /* Print */
-  @media print {
-    nav, header, #mobile-nav { display:none !important; }
-    .view-section { display:block !important; page-break-after:always; }
-    body { display:block; }
-  }
 </style>
 </head>
 <body class="flex flex-col md:flex-row">
@@ -107,12 +100,6 @@ tailwind.config = {
     
     <div class="text-[10px] tracking-widest text-ink/35 mb-1.5 mt-5 font-sans uppercase">Itinerary</div>
     <div id="sidebar-days"></div>
-  </div>
-  
-  <div class="mt-auto pt-6 pb-2">
-    <button onclick="exportItinerary()" class="w-full text-xs font-bold text-ink/50 hover:text-ink transition flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-white/60">
-      <i class="fas fa-file-export"></i> 匯出 PDF / 列印
-    </button>
   </div>
 </nav>
 
@@ -1221,10 +1208,6 @@ function showToast(msg) {
 
 window.copyText = (text) => {
   navigator.clipboard.writeText(text).then(() => showToast('已複製到剪貼簿！'));
-};
-
-window.exportItinerary = () => {
-  window.print();
 };
 </script>
 </body>
