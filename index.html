@@ -34,33 +34,30 @@ tailwind.config = {
   * { box-sizing: border-box; }
   body { background: var(--paper); color: var(--ink); overflow-x: hidden; min-height: 100vh; }
   body::before { content:''; position:fixed; inset:0; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='1 0 0 0 0,0 1 0 0 0,0 0 1 0 0,0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)'/%3E%3C/svg%3E"); pointer-events:none; z-index:-1; opacity:0.5; }
+  
   .view-section { display:none; animation:fadeUp 0.4s ease; }
   .view-section.active { display:block; }
   @keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
-  
   .custom-scroll::-webkit-scrollbar { width:5px; height:5px; }
   .custom-scroll::-webkit-scrollbar-thumb { background:rgba(91,146,165,.25); border-radius:8px; }
   .no-scroll::-webkit-scrollbar { display:none; }
   .no-scroll { -ms-overflow-style:none; scrollbar-width:none; }
+  
   .timeline-dot::before { content:''; position:absolute; left:1.1rem; top:2.5rem; bottom:-1rem; width:2px; border-left:2px dashed rgba(91,146,165,.3); }
   .timeline-item:last-child .timeline-dot::before { display:none; }
   input[type=checkbox] { accent-color:var(--mint); cursor:pointer; }
   .checked-label span { text-decoration:line-through; opacity:.4; }
+  
   .active-sidebar { background:white !important; box-shadow:2px 4px 12px rgba(0,0,0,.06) !important; color:var(--ink) !important; }
   .active-mobile { background:white !important; box-shadow:0 2px 8px rgba(0,0,0,.08) !important; transform:scale(1.05) !important; color:var(--ink) !important; }
   .filter-active { background:var(--ink) !important; color:white !important; }
   .tab-active { border-bottom:2px solid var(--ocean); color:var(--ink) !important; font-weight:700; }
   .pb-safe { padding-bottom: calc(0.75rem + env(safe-area-inset-bottom)); }
 
-  /* Weather icon animation */
   @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
   .weather-icon { animation:float 3s ease-in-out infinite; }
-
-  /* Notes textarea */
   textarea { font-family:'Noto Sans TC',sans-serif; resize:vertical; }
   textarea:focus { outline:none; box-shadow:0 0 0 2px rgba(91,146,165,.3); }
-
-  /* Toast */
   #toast { position:fixed; bottom:7rem; left:50%; transform:translateX(-50%) translateY(20px); background:var(--ink); color:white; padding:.6rem 1.4rem; border-radius:99px; font-size:.8rem; font-weight:700; opacity:0; transition:all .3s; z-index:999; pointer-events:none; }
   #toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
 </style>
@@ -97,6 +94,7 @@ tailwind.config = {
     <button class="nav-btn sidebar-btn w-full text-left px-3 py-2.5 rounded-xl hover:bg-white/80 transition-all flex items-center gap-2.5 text-ink/60" data-target="view-checklist"><i class="fas fa-suitcase-rolling text-coral w-4 text-center text-xs"></i> 出發準備清單</button>
     <button class="nav-btn sidebar-btn w-full text-left px-3 py-2.5 rounded-xl hover:bg-white/80 transition-all flex items-center gap-2.5 text-ink/60" data-target="view-notes"><i class="fas fa-sticky-note text-dusk w-4 text-center text-xs"></i> 旅行備忘錄</button>
     <button class="nav-btn sidebar-btn w-full text-left px-3 py-2.5 rounded-xl hover:bg-white/80 transition-all flex items-center gap-2.5 text-ink/60" data-target="view-wishlist"><i class="fas fa-heart text-coral w-4 text-center text-xs"></i> 我的收藏清單</button>
+    <button class="nav-btn sidebar-btn w-full text-left px-3 py-2.5 rounded-xl hover:bg-white/80 transition-all flex items-center gap-2.5 text-ink/60" data-target="view-phrases"><i class="fas fa-language text-sky w-4 text-center text-xs"></i> 實用日文小卡</button>
     
     <div class="text-[10px] tracking-widest text-ink/35 mb-1.5 mt-5 font-sans uppercase">Itinerary</div>
     <div id="sidebar-days"></div>
@@ -417,6 +415,21 @@ tailwind.config = {
     <div id="wishlist-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
   </section>
 
+  <!-- VIEW: PHRASES (實用日語字卡) -->
+  <section id="view-phrases" class="view-section max-w-5xl mx-auto">
+    <div class="mb-6">
+      <h2 class="font-heading font-black text-3xl text-ink mb-2">急救日文小卡 🗣️</h2>
+      <p class="text-ink/60 text-sm">點擊喇叭讓手機直接幫你說！點餐、購物、問路必備。</p>
+    </div>
+    <!-- 分類標籤 -->
+    <div class="flex gap-2 overflow-x-auto no-scroll mb-5 pb-1" id="phrases-filters">
+      <!-- 動態產生 -->
+    </div>
+    <div id="phrases-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <!-- 動態產生 -->
+    </div>
+  </section>
+
   <!-- VIEW: DAY -->
   <section id="view-day" class="view-section max-w-5xl mx-auto">
     <div id="day-header" class="mb-8 pb-6 border-b-2 border-dashed border-ocean/20 flex flex-col md:flex-row gap-5 items-start md:items-center"></div>
@@ -424,7 +437,7 @@ tailwind.config = {
     <!-- Day Tabs -->
     <div class="flex gap-1 mb-6 bg-paperDark rounded-2xl p-1 w-fit">
       <button id="tab-itinerary" onclick="switchDayTab('itinerary')" class="px-4 py-2 text-sm font-heading font-bold rounded-xl bg-white shadow-sm text-ink transition">📍 行程</button>
-      <button id="tab-places" onclick="switchDayTab('places')" class="px-4 py-2 text-sm font-heading font-bold rounded-xl text-ink/50 hover:text-ink transition">🍜 探索 (20選)</button>
+      <button id="tab-places" onclick="switchDayTab('places')" class="px-4 py-2 text-sm font-heading font-bold rounded-xl text-ink/50 hover:text-ink transition">🍜 探索</button>
       <button id="tab-map" onclick="switchDayTab('map')" class="px-4 py-2 text-sm font-heading font-bold rounded-xl text-ink/50 hover:text-ink transition">🗺 地圖</button>
     </div>
 
@@ -451,7 +464,7 @@ tailwind.config = {
     <!-- Places Tab -->
     <div id="day-tab-places" class="hidden">
       <div class="flex flex-wrap gap-2 mb-5" id="place-filters">
-        <button class="filter-btn filter-active px-3 py-1.5 rounded-full text-xs font-bold border border-ink/20 transition" data-filter="all">全部 (20)</button>
+        <button class="filter-btn filter-active px-3 py-1.5 rounded-full text-xs font-bold border border-ink/20 transition" data-filter="all">全部</button>
         <button class="filter-btn bg-paperDark text-ink/60 px-3 py-1.5 rounded-full text-xs font-bold border border-ocean/10 hover:bg-sand/10 transition" data-filter="food">🍜 美食</button>
         <button class="filter-btn bg-paperDark text-ink/60 px-3 py-1.5 rounded-full text-xs font-bold border border-ocean/10 hover:bg-ocean/10 transition" data-filter="sight">🏝️ 景點/購物</button>
       </div>
@@ -484,6 +497,7 @@ tailwind.config = {
   <button class="nav-btn mobile-btn snap-center flex-shrink-0 flex flex-col items-center justify-center w-16 h-12 rounded-xl text-ink/50" data-target="view-checklist"><i class="fas fa-suitcase-rolling text-base"></i><span class="text-[0.58rem] font-bold mt-0.5">清單</span></button>
   <button class="nav-btn mobile-btn snap-center flex-shrink-0 flex flex-col items-center justify-center w-16 h-12 rounded-xl text-ink/50" data-target="view-notes"><i class="fas fa-sticky-note text-base"></i><span class="text-[0.58rem] font-bold mt-0.5">備忘</span></button>
   <button class="nav-btn mobile-btn snap-center flex-shrink-0 flex flex-col items-center justify-center w-16 h-12 rounded-xl text-ink/50" data-target="view-wishlist"><i class="fas fa-heart text-base"></i><span class="text-[0.58rem] font-bold mt-0.5">收藏</span></button>
+  <button class="nav-btn mobile-btn snap-center flex-shrink-0 flex flex-col items-center justify-center w-16 h-12 rounded-xl text-ink/50" data-target="view-phrases"><i class="fas fa-language text-base"></i><span class="text-[0.58rem] font-bold mt-0.5">日文</span></button>
   <div class="w-px h-6 bg-ocean/20 flex-shrink-0"></div>
   <div id="mobile-day-btns" class="flex gap-1.5"></div>
 </nav>
@@ -687,12 +701,25 @@ const CHECKLIST_DATA = [
   { category:'🎒 旅行雜物', items:['環保購物袋','密封袋 (防水用品)','快乾毛巾','防水袋或防水包','水壺 (保持補水)'] }
 ];
 
+const PHRASES_DATA = [
+  { tag: '🍽️ 餐廳點餐', color: 'sand', tw: '不好意思，請給我菜單。', ja: 'すみません、メニューをお願いします。', romaji: 'Sumimasen, menyū o onegaishimasu.', speak: 'すみません、メニューをお願いします' },
+  { tag: '🍽️ 餐廳點餐', color: 'sand', tw: '我要點這個。', ja: 'これをお願いします。', romaji: 'Kore o onegaishimasu.', speak: 'これをお願いします' },
+  { tag: '🍽️ 餐廳點餐', color: 'sand', tw: '請給我水。', ja: 'お水をください。', romaji: 'Omizu o kudasai.', speak: 'お水をください' },
+  { tag: '🛍️ 購物結帳', color: 'coral', tw: '這個可以退稅嗎？', ja: '免税（めんぜい）できますか？', romaji: 'Menzei dekimasu ka?', speak: '免税できますか' },
+  { tag: '🛍️ 購物結帳', color: 'coral', tw: '可以用信用卡嗎？', ja: 'クレジットカードは使えますか？', romaji: 'Kurejitto kādo wa tsukaemasu ka?', speak: 'クレジットカードは使えますか' },
+  { tag: '🛍️ 購物結帳', color: 'coral', tw: '請分開結帳。', ja: '別々（べつべつ）でお願いします。', romaji: 'Betsubetsu de onegaishimasu.', speak: '別々でお願いします' },
+  { tag: '🚨 困難求助', color: 'mint', tw: '請問廁所在哪裡？', ja: 'トイレはどこですか？', romaji: 'Toire wa doko desu ka?', speak: 'トイレはどこですか' },
+  { tag: '🚨 困難求助', color: 'mint', tw: '請幫幫我。', ja: '助けてください。', romaji: 'Tasukete kudasai.', speak: '助けてください' },
+  { tag: '🚨 困難求助', color: 'mint', tw: '這附近有便利商店嗎？', ja: 'この辺にコンビニはありますか？', romaji: 'Kono hen ni konbini wa arimasu ka?', speak: 'この辺にコンビニはありますか' }
+];
+
 // ===================== STATE =====================
 let state = {
   currentView: 'view-overview',
   currentDayId: null,
   currentDayTab: 'itinerary',
   placeFilter: 'all',
+  phrasesFilter: 'all', // 用來追蹤日語卡片的分類狀態
   checklist: JSON.parse(localStorage.getItem('ok_checklist_v2') || '{}'),
   wishlist: JSON.parse(localStorage.getItem('ok_wishlist') || '[]'),
   notes: JSON.parse(localStorage.getItem('ok_notes') || '{}'),
@@ -708,6 +735,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderChecklist();
   initNotes();
   updateWishlistCount();
+  renderPhrases(); // 初始化日文小卡
   
   // Init day nav highlight
   document.querySelector('.nav-btn[data-target="view-overview"]').classList.add('active-sidebar');
@@ -1007,6 +1035,52 @@ function renderWishlist() {
   }).join('');
 }
 
+// ===================== PHRASES =====================
+function renderPhrases() {
+  const filtersContainer = document.getElementById('phrases-filters');
+  const grid = document.getElementById('phrases-grid');
+  
+  // Render Filters
+  const tags = [...new Set(PHRASES_DATA.map(p => p.tag))];
+  filtersContainer.innerHTML = `
+    <button class="px-4 py-2 text-xs font-bold rounded-full flex-shrink-0 transition ${state.phrasesFilter === 'all' ? 'bg-ink text-white' : 'bg-white border border-ocean/10 text-ink/60 hover:bg-ocean/5'}" onclick="setPhrasesFilter('all')">全部</button>
+    ${tags.map(tag => `
+      <button class="px-4 py-2 text-xs font-bold rounded-full flex-shrink-0 transition ${state.phrasesFilter === tag ? 'bg-ink text-white' : 'bg-white border border-ocean/10 text-ink/60 hover:bg-ocean/5'}" onclick="setPhrasesFilter('${tag}')">${tag}</button>
+    `).join('')}
+  `;
+
+  // Render Cards
+  const filtered = state.phrasesFilter === 'all' ? PHRASES_DATA : PHRASES_DATA.filter(p => p.tag === state.phrasesFilter);
+  grid.innerHTML = filtered.map(p => `
+    <div class="bg-white rounded-2xl p-5 shadow-sm border border-ocean/10 relative group hover:shadow-md transition">
+      <button class="absolute top-4 right-4 w-8 h-8 rounded-full bg-ocean/10 text-ocean flex items-center justify-center hover:bg-ocean hover:text-white transition cursor-pointer" onclick="speakJapanese('${p.speak}')" title="朗讀日文">
+        <i class="fas fa-volume-up text-sm"></i>
+      </button>
+      <div class="text-[10px] font-bold text-${p.color} mb-2">${p.tag}</div>
+      <h4 class="font-sans font-bold text-ink text-base mb-1">${p.tw}</h4>
+      <div class="text-ocean font-bold text-sm mb-1.5">${p.ja}</div>
+      <div class="font-mono text-xs text-ink/40">${p.romaji}</div>
+    </div>
+  `).join('');
+}
+
+window.setPhrasesFilter = (tag) => {
+  state.phrasesFilter = tag;
+  renderPhrases();
+};
+
+window.speakJapanese = (text) => {
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.cancel(); // 停止先前的發音避免排隊卡住
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'ja-JP';
+    utterance.rate = 0.85; // 放慢語速讓對方聽得更清楚
+    window.speechSynthesis.speak(utterance);
+  } else {
+    showToast('您的裝置不支援語音朗讀功能');
+  }
+};
+
 // ===================== DAY VIEW =====================
 function renderDayView(dayId) {
   const day = DAYS_DATA.find(d => d.id === dayId);
@@ -1207,8 +1281,31 @@ function showToast(msg) {
 }
 
 window.copyText = (text) => {
-  navigator.clipboard.writeText(text).then(() => showToast('已複製到剪貼簿！'));
+  const textArea = document.createElement("textarea");
+  textArea.value = text;
+  
+  // 將 textarea 移出畫面外，避免畫面閃爍或滾動
+  textArea.style.position = "fixed";
+  textArea.style.left = "-9999px";
+  textArea.style.top = "0";
+  
+  document.body.appendChild(textArea);
+  textArea.select();
+  
+  try {
+    const successful = document.execCommand('copy');
+    if (successful) {
+      showToast('已複製到剪貼簿！');
+    } else {
+      showToast('複製失敗');
+    }
+  } catch (err) {
+    showToast('複製失敗，請手動複製');
+  }
+  
+  document.body.removeChild(textArea);
 };
+
 </script>
 </body>
 </html>
