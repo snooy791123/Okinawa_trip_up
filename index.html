@@ -212,16 +212,23 @@ tailwind.config = {
             </div>
           </div>
           
-          <!-- Sun & UV Dashboard -->
-          <div class="flex gap-3 bg-white/50 backdrop-blur-sm px-4 py-2.5 rounded-2xl border border-white/60 shadow-inner-light">
-            <div class="flex items-center gap-2 pr-3 border-r border-ink/10">
+          <!-- Weather Dashboard (Rain, UV, Sunset) -->
+          <div class="flex gap-3 bg-white/50 backdrop-blur-sm px-4 py-2.5 rounded-2xl border border-white/60 shadow-inner-light overflow-x-auto no-scroll">
+            <div class="flex items-center gap-2 pr-3 border-r border-ink/10 flex-shrink-0">
+              <i class="fas fa-umbrella text-sky text-sm"></i>
+              <div>
+                <div class="text-[9px] text-ink/50 font-bold uppercase">Rain</div>
+                <div id="rain-prob" class="font-mono font-bold text-sm text-ink leading-none mt-0.5">--%</div>
+              </div>
+            </div>
+            <div class="flex items-center gap-2 pr-3 border-r border-ink/10 flex-shrink-0">
               <i class="fas fa-sun text-coral text-sm animate-pulse"></i>
               <div>
                 <div class="text-[9px] text-ink/50 font-bold uppercase">UV Index</div>
                 <div id="uv-index" class="font-mono font-bold text-sm text-ink leading-none mt-0.5">--</div>
               </div>
             </div>
-            <div class="flex items-center gap-2">
+            <div class="flex items-center gap-2 flex-shrink-0">
               <i class="fas fa-sunset text-sand text-sm"></i>
               <div>
                 <div class="text-[9px] text-ink/50 font-bold uppercase">Sunset</div>
@@ -870,9 +877,9 @@ function initOverview() {
 
 async function fetchWeatherAndMarine() {
   try {
-    // Add sunrise, sunset, precipitation, and UV index
+    // Add sunrise, sunset, precipitation, rain probability, and UV index
     const [wr, mr] = await Promise.all([
-      fetch('https://api.open-meteo.com/v1/forecast?latitude=26.2124&longitude=127.6809&daily=temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_sum,sunrise,sunset&timezone=Asia%2FTokyo'),
+      fetch('https://api.open-meteo.com/v1/forecast?latitude=26.2124&longitude=127.6809&daily=temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_sum,precipitation_probability_max,sunrise,sunset&timezone=Asia%2FTokyo'),
       fetch('https://marine-api.open-meteo.com/v1/marine?latitude=26.2124&longitude=127.6809&daily=wave_height_max&timezone=Asia%2FTokyo')
     ]);
     const wd = await wr.json();
@@ -903,6 +910,9 @@ function applyWeatherTheme(dailyData) {
 
 function renderEnvironmentData(data) {
   // Use today's data (index 0)
+  if(data.precipitation_probability_max && data.precipitation_probability_max.length > 0) {
+    document.getElementById('rain-prob').textContent = data.precipitation_probability_max[0] + '%';
+  }
   if(data.uv_index_max && data.uv_index_max.length > 0) {
     document.getElementById('uv-index').textContent = data.uv_index_max[0].toFixed(1);
   }
