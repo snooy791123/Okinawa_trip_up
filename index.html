@@ -187,7 +187,6 @@ tailwind.config = {
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-      
       <!-- API 1: Weather Chart & Sun/UV -->
       <div class="glass-card rounded-3xl p-6 lg:col-span-2 border border-white flex flex-col">
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
@@ -260,6 +259,7 @@ tailwind.config = {
     </div>
   </section>
 
+  <!-- VIEW: CHECKLIST -->
   <section id="view-checklist" class="view-section max-w-4xl mx-auto">
     <div class="mb-8">
       <h2 class="font-heading font-black text-4xl text-ink mb-2">出發準備清單</h2>
@@ -284,116 +284,23 @@ tailwind.config = {
     <div id="checklist-container" class="grid grid-cols-1 md:grid-cols-2 gap-5"></div>
   </section>
 
+  <!-- VIEW: TOOLS -->
   <section id="view-tools" class="view-section max-w-5xl mx-auto">
     <div class="mb-8 text-center md:text-left flex justify-between items-end">
       <div>
         <h2 class="font-heading font-black text-4xl text-ink tracking-tight mb-2">實用百寶箱 🧰</h2>
-        <p class="text-ink/60 font-medium text-sm md:text-base">整合免稅計算機、代購清單與尺寸換算，購物零痛點。</p>
+        <p class="text-ink/60 font-medium text-sm md:text-base">整合尺寸換算與實用票券備忘，旅行更輕鬆。</p>
       </div>
     </div>
 
     <!-- Tools Navigation Tabs -->
     <div class="flex gap-2 overflow-x-auto no-scroll mb-6 pb-2 px-1">
-      <button class="tool-tab px-5 py-3 text-sm font-bold rounded-full bg-ink text-white shadow-md transition flex-shrink-0" onclick="switchToolTab(this, 'calc')"><i class="fas fa-calculator mr-2"></i>免稅折扣計算機</button>
-      <button class="tool-tab px-5 py-3 text-sm font-bold rounded-full bg-white/60 text-ink/60 hover:bg-white border border-white transition flex-shrink-0" onclick="switchToolTab(this, 'shop')"><i class="fas fa-shopping-bag mr-2"></i>互動代購清單</button>
-      <button class="tool-tab px-5 py-3 text-sm font-bold rounded-full bg-white/60 text-ink/60 hover:bg-white border border-white transition flex-shrink-0" onclick="switchToolTab(this, 'size')"><i class="fas fa-ruler-combined mr-2"></i>尺寸對照表</button>
+      <button class="tool-tab px-5 py-3 text-sm font-bold rounded-full bg-ink text-white shadow-md transition flex-shrink-0" onclick="switchToolTab(this, 'size')"><i class="fas fa-ruler-combined mr-2"></i>尺寸對照表</button>
       <button class="tool-tab px-5 py-3 text-sm font-bold rounded-full bg-white/60 text-ink/60 hover:bg-white border border-white transition flex-shrink-0" onclick="switchToolTab(this, 'info')"><i class="fas fa-ticket-alt mr-2"></i>票券與備忘</button>
     </div>
 
-    <!-- TAB 1: TAX & DISCOUNT CALCULATOR -->
-    <div id="tool-calc" class="tool-content active glass-card border border-white rounded-3xl p-6 lg:p-8">
-      <div class="flex items-center gap-3 mb-6">
-        <div class="w-10 h-10 rounded-full bg-coral/10 flex items-center justify-center text-coral"><i class="fas fa-calculator text-lg"></i></div>
-        <div>
-          <h3 class="font-heading font-black text-xl text-ink">日本免稅與折扣計算機</h3>
-          <p class="text-[11px] text-ink/50 font-bold mt-0.5">適用於唐吉訶德、BicCamera等提供額外外國人優惠券之商家</p>
-        </div>
-      </div>
-      
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <!-- Inputs -->
-        <div class="space-y-6">
-          <div>
-            <label class="text-xs font-bold text-ink/60 mb-2 block uppercase tracking-wider">Step 1: 輸入商品標籤價格 (JPY)</label>
-            <div class="relative">
-              <span class="absolute left-4 top-1/2 -translate-y-1/2 font-mono font-black text-ink/40">¥</span>
-              <input type="number" id="calc-price" placeholder="例如: 15000" class="w-full bg-white/80 border border-white shadow-inner-light rounded-2xl pl-9 pr-4 py-4 font-mono font-black text-2xl text-ink outline-none transition" oninput="calculateDiscount()">
-            </div>
-            <div class="flex gap-4 mt-3 pl-1">
-              <label class="flex items-center gap-2 cursor-pointer text-sm font-bold text-ink/70">
-                <input type="radio" name="taxType" value="included" class="w-4 h-4 accent-ocean" checked onchange="calculateDiscount()"> 標價含稅 (税込)
-              </label>
-              <label class="flex items-center gap-2 cursor-pointer text-sm font-bold text-ink/70">
-                <input type="radio" name="taxType" value="excluded" class="w-4 h-4 accent-ocean" onchange="calculateDiscount()"> 標價未稅 (税抜)
-              </label>
-            </div>
-          </div>
-          
-          <div>
-            <label class="text-xs font-bold text-ink/60 mb-2 block uppercase tracking-wider">Step 2: 選擇免稅與優惠券</label>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <label class="cursor-pointer">
-                <input type="radio" name="discountType" value="taxfree" class="peer sr-only" checked onchange="calculateDiscount()">
-                <div class="text-center px-3 py-3 rounded-xl border-2 border-white/50 bg-white/40 font-bold text-sm text-ink/60 peer-checked:border-ocean peer-checked:bg-ocean/10 peer-checked:text-ocean transition">僅退稅 (10%)</div>
-              </label>
-              <label class="cursor-pointer">
-                <input type="radio" name="discountType" value="coupon5" class="peer sr-only" onchange="calculateDiscount()">
-                <div class="text-center px-3 py-3 rounded-xl border-2 border-white/50 bg-white/40 font-bold text-sm text-ink/60 peer-checked:border-coral peer-checked:bg-coral/10 peer-checked:text-coral transition">退稅 + 5% OFF<br><span class="text-[9px] opacity-70">唐吉訶德常用</span></div>
-              </label>
-              <label class="cursor-pointer">
-                <input type="radio" name="discountType" value="coupon7" class="peer sr-only" onchange="calculateDiscount()">
-                <div class="text-center px-3 py-3 rounded-xl border-2 border-white/50 bg-white/40 font-bold text-sm text-ink/60 peer-checked:border-sand peer-checked:bg-sand/10 peer-checked:text-sand transition">退稅 + 7% OFF<br><span class="text-[9px] opacity-70">BicCamera常用</span></div>
-              </label>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Outputs -->
-        <div class="bg-ink rounded-3xl p-6 flex flex-col justify-center shadow-float text-white relative overflow-hidden">
-          <div class="absolute -right-10 -top-10 text-white/5"><i class="fas fa-tags text-9xl"></i></div>
-          <div class="relative z-10">
-            <div class="text-xs font-bold text-white/50 uppercase tracking-widest mb-1">Final Price (JPY)</div>
-            <div class="font-mono font-black text-5xl text-mint mb-6">¥<span id="calc-final-jpy">0</span></div>
-            
-            <div class="text-xs font-bold text-white/50 uppercase tracking-widest mb-1">Estimated TWD</div>
-            <div class="font-mono font-bold text-2xl text-white">NT$ <span id="calc-final-twd">0</span></div>
-            
-            <div class="mt-6 pt-4 border-t border-white/10 flex justify-between items-center">
-              <span class="text-xs text-white/40 font-bold">總共為您省下</span>
-              <span class="font-mono font-bold text-coral text-lg border border-coral/30 bg-coral/10 px-3 py-1 rounded-lg">¥<span id="calc-saved-jpy">0</span></span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- TAB 2: INTERACTIVE SHOPPING LIST -->
-    <div id="tool-shop" class="tool-content hidden glass-card border border-white rounded-3xl p-6 lg:p-8">
-      <div class="flex items-center gap-3 mb-6">
-        <div class="w-10 h-10 rounded-full bg-sand/10 flex items-center justify-center text-sand"><i class="fas fa-shopping-bag text-lg"></i></div>
-        <div>
-          <h3 class="font-heading font-black text-xl text-ink">互動代購清單</h3>
-          <p class="text-[11px] text-ink/50 font-bold mt-0.5">紀錄親友託付或必買藥妝，買完打勾絕不漏漏</p>
-        </div>
-      </div>
-      
-      <div class="flex gap-2 mb-6">
-        <input type="text" id="shop-input" placeholder="輸入想買的物品 (例如: 合利他命 2瓶)" class="flex-1 bg-white/80 border border-white shadow-inner-light rounded-xl px-4 py-3 text-sm font-sans font-bold outline-none focus:bg-white transition" onkeypress="if(event.key === 'Enter') addShopItem()">
-        <button onclick="addShopItem()" class="bg-ink text-white px-5 py-3 rounded-xl text-sm font-bold hover:bg-ink/80 transition shadow-sm"><i class="fas fa-plus"></i></button>
-      </div>
-      
-      <div id="shop-empty" class="text-center py-8 text-ink/30 hidden">
-        <i class="fas fa-box-open text-4xl mb-3"></i>
-        <p class="text-sm font-bold">購物清單空空如也，準備大開殺戒吧！</p>
-      </div>
-      
-      <ul id="shop-list" class="space-y-2 max-h-[300px] overflow-y-auto custom-scroll pr-1">
-        <!-- JS 動態生成 -->
-      </ul>
-    </div>
-
     <!-- TAB 3: SIZE CONVERTER -->
-    <div id="tool-size" class="tool-content hidden glass-card border border-white rounded-3xl p-6 lg:p-8">
+    <div id="tool-size" class="tool-content active glass-card border border-white rounded-3xl p-6 lg:p-8">
       <div class="flex items-center gap-3 mb-6">
         <div class="w-10 h-10 rounded-full bg-sky/10 flex items-center justify-center text-sky"><i class="fas fa-ruler-combined text-lg"></i></div>
         <div>
@@ -503,6 +410,7 @@ tailwind.config = {
     </div>
   </section>
 
+  <!-- VIEW: WISHLIST -->
   <section id="view-wishlist" class="view-section max-w-5xl mx-auto">
     <div class="mb-8">
       <h2 class="font-heading font-black text-4xl text-ink mb-2 tracking-tight">我的收藏清單 ❤️</h2>
@@ -516,6 +424,7 @@ tailwind.config = {
     <div id="wishlist-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
   </section>
 
+  <!-- VIEW: PHRASES -->
   <section id="view-phrases" class="view-section max-w-5xl mx-auto">
     <div class="mb-8">
       <h2 class="font-heading font-black text-4xl text-ink mb-2 tracking-tight">急救日文小卡 🗣️</h2>
@@ -525,6 +434,7 @@ tailwind.config = {
     <div id="phrases-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
   </section>
 
+  <!-- VIEW: DAY DETAIL -->
   <section id="view-day" class="view-section max-w-5xl mx-auto">
     <div id="day-header" class="mb-8 pb-6 border-b border-ink/10 flex flex-col md:flex-row gap-6 items-start md:items-center"></div>
 
@@ -821,10 +731,9 @@ let state = {
   placeFilter: 'all',
   phrasesFilter: 'all',
   checklist: JSON.parse(localStorage.getItem('ok_checklist_v3') || '{}'),
-  wishlist: JSON.parse(localStorage.getItem('ok_wishlist_v3') || '[]'),
+  wishlist: JSON.parse(localStorage.getItem('ok_wishlist_v4') || '[]'), // Use v4 to avoid old bad data
   notes: JSON.parse(localStorage.getItem('ok_notes_v3') || '{}'),
   dayNotes: JSON.parse(localStorage.getItem('ok_daynotes_v3') || '{}'),
-  shoppingList: JSON.parse(localStorage.getItem('ok_shoppingList_v3') || '[]'),
   exchangeRate: { TWD: 0.21 } // Fallback
 };
 
@@ -835,9 +744,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initOverview();
   renderChecklist();
   initNotes();
-  updateWishlistCount();
   renderPhrases();
-  renderShoppingList();
+  renderWishlist(); // Render wishlist on load
   
   // Highlight default
   document.querySelector('.sidebar-btn[data-target="view-overview"]')?.classList.add('active-sidebar');
@@ -1002,7 +910,6 @@ async function fetchCurrency() {
     const updated = new Date().toLocaleTimeString('zh-TW', {hour:'2-digit', minute:'2-digit'});
     document.getElementById('rateUpdate').innerHTML = `<i class="fas fa-sync-alt mr-1"></i> ${updated}`;
     updateCurrency();
-    calculateDiscount(); // also update calculator if loaded
   } catch(e) {
     document.getElementById('rateUpdate').textContent = '無法取得匯率';
   }
@@ -1026,88 +933,9 @@ window.switchToolTab = (btn, id) => {
   btn.classList.add('bg-ink', 'text-white', 'shadow-md');
   btn.classList.remove('bg-white/60', 'text-ink/60');
   
-  ['calc','shop','size','info'].forEach(n => {
-    document.getElementById(`tool-${n}`).classList.toggle('hidden', n !== id);
+  ['size','info'].forEach(n => {
+    document.getElementById(`tool-${n}`)?.classList.toggle('hidden', n !== id);
   });
-};
-
-window.calculateDiscount = () => {
-  const priceInput = parseFloat(document.getElementById('calc-price').value) || 0;
-  if(priceInput === 0) {
-    document.getElementById('calc-final-jpy').textContent = "0";
-    document.getElementById('calc-final-twd').textContent = "0";
-    document.getElementById('calc-saved-jpy').textContent = "0";
-    return;
-  }
-
-  const taxType = document.querySelector('input[name="taxType"]:checked').value;
-  const discountType = document.querySelector('input[name="discountType"]:checked').value;
-
-  // 1. 取得未稅原價 (Base Price)
-  let basePrice = taxType === 'included' ? priceInput / 1.1 : priceInput;
-  
-  // 2. 計算折扣
-  let discountRate = 0; // taxfree has 0 additional discount on basePrice
-  if(discountType === 'coupon5') discountRate = 0.05;
-  if(discountType === 'coupon7') discountRate = 0.07;
-  
-  let finalJPY = basePrice * (1 - discountRate);
-  
-  // 3. 計算省下多少 (與原含稅價比較)
-  let originalIncluded = taxType === 'included' ? priceInput : priceInput * 1.1;
-  let savedJPY = originalIncluded - finalJPY;
-  
-  // 4. 換算台幣
-  let finalTWD = finalJPY * state.exchangeRate.TWD;
-
-  // Update UI
-  document.getElementById('calc-final-jpy').textContent = Math.round(finalJPY).toLocaleString();
-  document.getElementById('calc-final-twd').textContent = Math.round(finalTWD).toLocaleString();
-  document.getElementById('calc-saved-jpy').textContent = Math.round(savedJPY).toLocaleString();
-};
-
-function renderShoppingList() {
-  const listEl = document.getElementById('shop-list');
-  const emptyEl = document.getElementById('shop-empty');
-  listEl.innerHTML = '';
-  
-  if(state.shoppingList.length === 0) {
-    emptyEl.classList.remove('hidden');
-  } else {
-    emptyEl.classList.add('hidden');
-    state.shoppingList.forEach((item, idx) => {
-      listEl.innerHTML += `
-        <li class="flex items-center gap-3 p-3 bg-white/50 rounded-2xl border border-white shadow-inner-light transition hover:bg-white/80">
-          <input type="checkbox" class="w-5 h-5 flex-shrink-0 accent-ocean rounded-md" ${item.checked ? 'checked' : ''} onchange="toggleShopItem(${idx})">
-          <span class="flex-1 font-sans text-sm font-bold ${item.checked ? 'line-through text-ink/30' : 'text-ink'}">${item.text}</span>
-          <button onclick="deleteShopItem(${idx})" class="text-ink/20 hover:text-coral transition w-8 h-8 flex items-center justify-center rounded-full hover:bg-coral/10"><i class="fas fa-trash-alt text-xs"></i></button>
-        </li>
-      `;
-    });
-  }
-}
-
-window.addShopItem = () => {
-  const input = document.getElementById('shop-input');
-  const val = input.value.trim();
-  if(!val) return;
-  
-  state.shoppingList.push({ text: val, checked: false });
-  localStorage.setItem('ok_shoppingList_v3', JSON.stringify(state.shoppingList));
-  input.value = '';
-  renderShoppingList();
-};
-
-window.toggleShopItem = (idx) => {
-  state.shoppingList[idx].checked = !state.shoppingList[idx].checked;
-  localStorage.setItem('ok_shoppingList_v3', JSON.stringify(state.shoppingList));
-  renderShoppingList();
-};
-
-window.deleteShopItem = (idx) => {
-  state.shoppingList.splice(idx, 1);
-  localStorage.setItem('ok_shoppingList_v3', JSON.stringify(state.shoppingList));
-  renderShoppingList();
 };
 
 function renderChecklist() {
@@ -1169,55 +997,79 @@ window.saveDayNote = (val) => {
   localStorage.setItem('ok_daynotes_v3', JSON.stringify(state.dayNotes));
 };
 
-function updateWishlistCount() {
-  // document.getElementById('wishlist-count').textContent = state.wishlist.length;
-}
-
 window.toggleWishlist = (dayId, placeIndex) => {
   const day = DAYS_DATA.find(d => d.id === dayId);
   if(!day) return;
   const place = day.places[placeIndex];
   const key = `${dayId}-${placeIndex}`;
   
-  const existing = state.wishlist.findIndex(w => w.key === key);
-  if(existing >= 0) {
-    state.wishlist.splice(existing, 1);
+  const existingIndex = state.wishlist.findIndex(w => w.key === key);
+  
+  if(existingIndex >= 0) {
+    // Remove from wishlist
+    state.wishlist.splice(existingIndex, 1);
     showToast(`已移除「${place.name}」`);
   } else {
-    state.wishlist.push({ key, dayId, placeIndex, name: place.name, area: place.area, tags: place.tags, dayNum: day.num, recommend: place.recommend });
+    // Add to wishlist
+    state.wishlist.push({ 
+      key, 
+      dayId, 
+      placeIndex, 
+      name: place.name, 
+      area: place.area, 
+      tags: place.tags, 
+      dayNum: day.num, 
+      recommend: place.recommend,
+      desc: place.desc,
+      hex: day.hex
+    });
     showToast(`已收藏「${place.name}」❤️`);
   }
   
-  localStorage.setItem('ok_wishlist_v3', JSON.stringify(state.wishlist));
-  updateWishlistCount();
+  // Save to local storage
+  localStorage.setItem('ok_wishlist_v4', JSON.stringify(state.wishlist));
   
-  const btns = document.querySelectorAll(`[data-wish="${key}"]`);
-  btns.forEach(btn => {
-    const isWished = state.wishlist.some(w => w.key === key);
-    btn.innerHTML = isWished ? '<i class="fas fa-heart text-coral"></i>' : '<i class="far fa-heart text-ink/30"></i>';
-    btn.classList.toggle('bg-coral/10', isWished);
-    btn.classList.toggle('border-coral/30', isWished);
-  });
+  // Sync the UI globally for this specific place key
+  syncWishlistButtons(key);
   
-  if(state.currentView === 'view-wishlist') renderWishlist();
+  // Re-render the wishlist page if it's currently active or globally
+  renderWishlist();
 };
+
+function syncWishlistButtons(key) {
+  const isWished = state.wishlist.some(w => w.key === key);
+  const btns = document.querySelectorAll(`[data-wish="${key}"]`);
+  
+  btns.forEach(btn => {
+    btn.innerHTML = `<i class="${isWished ? 'fas' : 'far'} fa-heart ${isWished ? 'text-sm' : 'text-xs'}"></i>`;
+    
+    if (isWished) {
+      btn.classList.add('text-coral', 'border-coral/30', 'bg-coral/10');
+      btn.classList.remove('text-ink/30', 'hover:bg-coral/10', 'hover:text-coral', 'border-white', 'bg-white');
+    } else {
+      btn.classList.remove('text-coral', 'border-coral/30', 'bg-coral/10');
+      btn.classList.add('text-ink/30', 'hover:bg-coral/10', 'hover:text-coral', 'border-white', 'bg-white');
+    }
+  });
+}
 
 function renderWishlist() {
   const grid = document.getElementById('wishlist-grid');
   const empty = document.getElementById('wishlist-empty');
   
+  if(!grid || !empty) return;
+
   if(!state.wishlist.length) {
     empty.style.display = 'block';
     grid.innerHTML = '';
     return;
   }
-  empty.style.display = 'none';
   
+  empty.style.display = 'none';
   grid.innerHTML = state.wishlist.map(w => {
-    const day = DAYS_DATA.find(d => d.id === w.dayId);
     return `<div class="glass-card rounded-3xl p-5 border border-white relative group">
-      <button onclick="toggleWishlist('${w.dayId}', ${w.placeIndex})" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-white flex items-center justify-center text-coral shadow-sm border border-coral/20 hover:bg-coral hover:text-white transition"><i class="fas fa-heart text-xs"></i></button>
-      <span class="text-[9px] font-black px-2 py-1 rounded-md mb-3 inline-block uppercase tracking-wider text-white shadow-sm" style="background:${day?.hex}">Day ${w.dayNum}</span>
+      <button onclick="toggleWishlist('${w.dayId}', ${w.placeIndex})" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-coral/10 flex items-center justify-center text-coral shadow-sm border border-coral/30 hover:bg-coral hover:text-white transition"><i class="fas fa-heart text-sm"></i></button>
+      <span class="text-[9px] font-black px-2 py-1 rounded-md mb-3 inline-block uppercase tracking-wider text-white shadow-sm" style="background:${w.hex}">Day ${w.dayNum}</span>
       <h4 class="font-heading font-black text-lg text-ink mb-1 pr-8 leading-tight">${w.name}</h4>
       <div class="text-[11px] font-bold text-ink/40 mb-3"><i class="fas fa-map-pin mr-1"></i>${w.area} · ${w.tags}</div>
       <div class="bg-white/50 rounded-xl p-3 text-xs text-ink/80 font-bold mb-4 border border-white shadow-inner-light leading-relaxed"><i class="fas fa-star text-sand mr-1.5"></i>${w.recommend}</div>
@@ -1362,8 +1214,8 @@ function renderPlaces(day) {
           <span class="inline-block text-[9px] font-black uppercase tracking-wider bg-${tagColor}/10 text-${tagColor} px-2 py-1 rounded-md border border-${tagColor}/20">${p.tags}</span>
         </div>
         <div class="flex items-center gap-1.5 flex-shrink-0 flex-col">
-          <button data-wish="${key}" onclick="toggleWishlist('${day.id}', ${origIdx})" class="w-9 h-9 flex items-center justify-center rounded-full bg-white transition shadow-sm border border-white ${isWished?'text-coral border-coral/30 bg-coral/10':'text-ink/30 hover:bg-coral/10 hover:text-coral'}">
-            <i class="${isWished?'fas':'far'} fa-heart text-sm"></i>
+          <button data-wish="${key}" onclick="toggleWishlist('${day.id}', ${origIdx})" class="w-9 h-9 flex items-center justify-center rounded-full transition shadow-sm border ${isWished?'text-coral border-coral/30 bg-coral/10':'text-ink/30 hover:bg-coral/10 hover:text-coral bg-white border-white'}">
+            <i class="${isWished?'fas':'far'} fa-heart ${isWished?'text-sm':'text-xs'}"></i>
           </button>
           <div class="bg-white/80 border border-white shadow-inner-light text-ink font-mono font-black text-[10px] px-2 py-1 rounded-lg flex items-center gap-0.5 mt-1">
             ${p.rating}<i class="fas fa-star text-sand text-[8px] pb-px"></i>
@@ -1434,7 +1286,7 @@ function performSearch(query) {
       return `<div class="glass-card rounded-3xl p-5 border border-white shadow-sm flex flex-col group transform transition hover:-translate-y-1 hover:shadow-float">
         <div class="flex justify-between items-start mb-3">
           <span class="text-[9px] font-black px-2 py-1 rounded-md text-white shadow-sm uppercase tracking-wider" style="background:${p.dayHex}">Day ${p.dayNum} · ${p.dayDate}</span>
-          <button data-wish="${key}" onclick="toggleWishlist('${p.dayId}', ${p.origIdx})" class="w-8 h-8 rounded-full bg-white flex items-center justify-center transition border border-white shadow-sm ${isWished?'text-coral border-coral/30 bg-coral/10':'text-ink/30 hover:bg-coral/10 hover:text-coral'}"><i class="${isWished?'fas':'far'} fa-heart text-xs"></i></button>
+          <button data-wish="${key}" onclick="toggleWishlist('${p.dayId}', ${p.origIdx})" class="w-8 h-8 rounded-full flex items-center justify-center transition border shadow-sm ${isWished?'text-coral border-coral/30 bg-coral/10':'text-ink/30 hover:bg-coral/10 hover:text-coral bg-white border-white'}"><i class="${isWished?'fas':'far'} fa-heart ${isWished?'text-sm':'text-xs'}"></i></button>
         </div>
         <h4 class="font-heading font-black text-lg text-ink mb-1 leading-tight">${p.name}</h4>
         <div class="text-[10px] font-bold text-ink/40 mb-3"><i class="fas fa-map-pin mr-1"></i>${p.area} · ${p.tags}</div>
