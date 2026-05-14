@@ -123,7 +123,7 @@ tailwind.config = {
 <!-- Mobile Header (Glass) -->
 <header class="md:hidden glass-card px-5 py-3.5 flex justify-between items-center sticky top-0 z-40 rounded-b-3xl mb-4 mx-2 mt-2 shadow-sm">
   <div class="font-heading font-black text-xl text-ink tracking-tight">Okinawa <span class="text-ocean">2026</span></div>
-  <button onclick="document.getElementById('quickSearch').focus()" class="w-9 h-9 flex items-center justify-center rounded-full bg-white/60 text-ink/70 hover:text-ink transition shadow-sm border border-white">
+  <button onclick="openMobileSearch()" class="w-9 h-9 flex items-center justify-center rounded-full bg-white/60 text-ink/70 hover:text-ink transition shadow-sm border border-white">
     <i class="fas fa-search"></i>
   </button>
 </header>
@@ -502,9 +502,23 @@ tailwind.config = {
   <section id="view-search" class="view-section max-w-5xl mx-auto">
     <div class="mb-8">
       <h2 class="font-heading font-black text-4xl text-ink tracking-tight">搜尋結果</h2>
-      <p class="text-ink/60 font-bold mt-2 bg-white/40 inline-block px-3 py-1 rounded-lg border border-white" id="search-count"></p>
+      
+      <!-- 手機版專用搜尋列 -->
+      <div class="mt-4 relative md:hidden">
+        <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-ink/40 text-sm"></i>
+        <input id="mobileQuickSearch" type="text" placeholder="搜尋景點、美食..." class="w-full pl-10 pr-4 py-3 text-sm bg-white/60 backdrop-blur-md border border-white shadow-inner-light rounded-2xl font-sans outline-none focus:bg-white transition placeholder:text-ink/40" oninput="handleSearch(this.value, 'mobile')">
+      </div>
+
+      <p class="text-ink/60 font-bold mt-4 bg-white/40 inline-block px-3 py-1 rounded-lg border border-white" id="search-count"></p>
     </div>
-    <div id="search-results" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+    <div id="search-results" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+       <!-- 預設顯示提示訊息 -->
+       <div class="col-span-full text-center py-20 text-ink/30 glass-card rounded-3xl border border-white" id="search-empty-state">
+         <div class="text-5xl mb-4 opacity-50">🔍</div>
+         <p class="font-bold text-lg">請輸入關鍵字開始搜尋</p>
+         <p class="text-xs mt-2 font-medium">例如：燒肉、海灘、購物、拉麵</p>
+       </div>
+    </div>
   </section>
 </main>
 
@@ -1299,15 +1313,37 @@ window.switchDayTab = (tab) => {
   });
 };
 
+window.openMobileSearch = () => {
+  // 切換到搜尋視圖
+  switchView('view-search');
+  
+  // 清除導航按鈕的 active 狀態
+  document.querySelectorAll('.sidebar-btn, .mobile-btn').forEach(b => {
+    b.classList.remove('active-sidebar', 'active-mobile');
+    if(b.classList.contains('sidebar-btn')) b.classList.add('text-ink/60');
+    if(b.classList.contains('mobile-btn')) b.classList.add('text-ink/50');
+  });
+
+  // 嘗試聚焦手機版搜尋框，使用 setTimeout 確保視圖已顯示
+  setTimeout(() => {
+    const mobileInput = document.getElementById('mobileQuickSearch');
+    if (mobileInput) mobileInput.focus();
+  }, 100);
+};
+
 let searchTimeout;
-window.handleSearch = (val) => {
+window.handleSearch = (val, source = 'desktop') => {
   clearTimeout(searchTimeout);
-  if(!val.trim()) {
-    if(state.currentView === 'view-search') {
-      document.querySelector('.sidebar-btn[data-target="view-overview"]')?.click();
-    }
-    return;
+  
+  // 同步兩個輸入框的值 (如果存在)
+  if (source === 'desktop') {
+     const mobileInput = document.getElementById('mobileQuickSearch');
+     if(mobileInput) mobileInput.value = val;
+  } else {
+     const desktopInput = document.getElementById('quickSearch');
+     if(desktopInput) desktopInput.value = val;
   }
+
   // Immediately switch to search view on mobile or desktop if not already there
   if(state.currentView !== 'view-search') {
       // Deactivate other nav buttons
@@ -1323,6 +1359,20 @@ window.handleSearch = (val) => {
 };
 
 function performSearch(query) {
+  const container = document.getElementById('search-results');
+  const countDisplay = document.getElementById('search-count');
+  
+  if(!query) {
+    countDisplay.textContent = '';
+    container.innerHTML = `
+       <div class="col-span-full text-center py-20 text-ink/30 glass-card rounded-3xl border border-white" id="search-empty-state">
+         <div class="text-5xl mb-4 opacity-50">🔍</div>
+         <p class="font-bold text-lg">請輸入關鍵字開始搜尋</p>
+         <p class="text-xs mt-2 font-medium">例如：燒肉、海灘、購物、拉麵</p>
+       </div>`;
+    return;
+  }
+
   const q = query.toLowerCase();
   const results = [];
   
@@ -1334,11 +1384,10 @@ function performSearch(query) {
     });
   });
   
-  document.getElementById('search-count').textContent = `找到 ${results.length} 個結果，關鍵字：「${query}」`;
+  countDisplay.textContent = `找到 ${results.length} 個結果，關鍵字：「${query}」`;
   
-  const container = document.getElementById('search-results');
   if(!results.length) {
-    container.innerHTML = '<div class="col-span-3 text-center py-20 text-ink/30 glass-card rounded-3xl border border-white"><div class="text-5xl mb-4 opacity-50">🔍</div><p class="font-bold text-lg">找不到相關地點或美食</p><p class="text-xs mt-2 font-medium">試試看其他關鍵字，例如：燒肉、海灘、購物</p></div>';
+    container.innerHTML = '<div class="col-span-full text-center py-20 text-ink/30 glass-card rounded-3xl border border-white"><div class="text-5xl mb-4 opacity-50">😕</div><p class="font-bold text-lg">找不到相關地點或美食</p><p class="text-xs mt-2 font-medium">試試看其他關鍵字</p></div>';
   } else {
     container.innerHTML = results.map(p => {
       const key = `${p.dayId}-${p.origIdx}`;
@@ -1358,10 +1407,6 @@ function performSearch(query) {
       </div>`;
     }).join('');
   }
-  
-  document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
-  document.getElementById('view-search').classList.add('active');
-  state.currentView = 'view-search';
 }
 
 function showToast(msg) {
