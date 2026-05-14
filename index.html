@@ -100,8 +100,22 @@ tailwind.config = {
 
   /* 琉璃卡片共用類別 */
   .glass-card { background: var(--glass); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid var(--glassBorder); box-shadow: var(--glass), var(--inner-light); }
+
+  /* 情緒天氣同步 - 雨天模式 (Dusk/Ink 色調) */
+  body.theme-rainy {
+    background: linear-gradient(135deg, #c4d4d9 0%, #a2b8c2 50%, #879ea8 100%);
+  }
+  body.theme-rainy::before {
+    opacity: 0.8;
+  }
+  body.theme-rainy .glass-card {
+    background: rgba(255, 255, 255, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+  body.theme-rainy .text-ocean { color: #2c4a52; }
 </style>
 </head>
+
 <body class="flex flex-col md:flex-row">
 
 <div id="toast"></div>
@@ -438,6 +452,11 @@ tailwind.config = {
   <section id="view-day" class="view-section max-w-5xl mx-auto">
     <div id="day-header" class="mb-8 pb-6 border-b border-ink/10 flex flex-col md:flex-row gap-6 items-start md:items-center"></div>
 
+    <!-- Google Map Embed 靜態圖縮圖 -->
+    <div id="day-map-container" class="glass-card rounded-3xl overflow-hidden border border-white mb-8 h-48 md:h-64 shadow-sm relative">
+       <div class="absolute inset-0 flex items-center justify-center text-ink/40 font-bold text-sm"><i class="fas fa-spinner fa-spin mr-2"></i>載入地圖中...</div>
+    </div>
+
     <!-- Day Tabs -->
     <div class="flex gap-2 mb-8 bg-white/40 p-1.5 rounded-full w-fit border border-white/60 shadow-inner-light backdrop-blur-sm">
       <button id="tab-itinerary" onclick="switchDayTab('itinerary')" class="px-5 py-2 text-sm font-heading font-bold rounded-full bg-white shadow-sm text-ink transition">📍 行程時間軸</button>
@@ -499,6 +518,12 @@ tailwind.config = {
   </button>
   <button class="nav-btn mobile-btn snap-center flex-shrink-0 flex items-center justify-center gap-2 px-5 py-3 rounded-full text-ink/50 font-bold transition-all" data-target="view-tools">
     <i class="fas fa-toolbox text-lg"></i> <span class="text-sm tracking-wide">百寶箱</span>
+  </button>
+  <button class="nav-btn mobile-btn snap-center flex-shrink-0 flex items-center justify-center gap-2 px-5 py-3 rounded-full text-ink/50 font-bold transition-all" data-target="view-wishlist">
+    <i class="fas fa-heart text-coral text-lg"></i> <span class="text-sm tracking-wide">收藏</span>
+  </button>
+  <button class="nav-btn mobile-btn snap-center flex-shrink-0 flex items-center justify-center gap-2 px-5 py-3 rounded-full text-ink/50 font-bold transition-all" data-target="view-phrases">
+    <i class="fas fa-language text-sky text-lg"></i> <span class="text-sm tracking-wide">日文</span>
   </button>
   
   <div class="w-px h-8 bg-ink/10 flex-shrink-0 mx-1"></div>
@@ -746,6 +771,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initNotes();
   renderPhrases();
   renderWishlist(); // Render wishlist on load
+  setupPWA(); // 初始化 PWA 離線支援
   
   // Highlight default
   document.querySelector('.sidebar-btn[data-target="view-overview"]')?.classList.add('active-sidebar');
@@ -830,9 +856,9 @@ function initOverview() {
 
 async function fetchWeatherAndMarine() {
   try {
-    // Add sunrise, sunset, and UV index
+    // Add sunrise, sunset, precipitation, and UV index
     const [wr, mr] = await Promise.all([
-      fetch('https://api.open-meteo.com/v1/forecast?latitude=26.2124&longitude=127.6809&daily=temperature_2m_max,temperature_2m_min,uv_index_max,sunrise,sunset&timezone=Asia%2FTokyo'),
+      fetch('https://api.open-meteo.com/v1/forecast?latitude=26.2124&longitude=127.6809&daily=temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_sum,sunrise,sunset&timezone=Asia%2FTokyo'),
       fetch('https://marine-api.open-meteo.com/v1/marine?latitude=26.2124&longitude=127.6809&daily=wave_height_max&timezone=Asia%2FTokyo')
     ]);
     const wd = await wr.json();
@@ -840,8 +866,24 @@ async function fetchWeatherAndMarine() {
     renderWeatherChart(wd.daily);
     renderEnvironmentData(wd.daily);
     renderMarineData(md.daily);
+    applyWeatherTheme(wd.daily); // 根據天氣調整情緒色調
   } catch(e) {
     document.getElementById('marine-data').innerHTML = '<span class="text-coral text-xs font-bold">無法取得資料，請檢查網路</span>';
+  }
+}
+
+function applyWeatherTheme(dailyData) {
+  // 取得今天的預估降雨量 (mm)
+  const precip = dailyData.precipitation_sum && dailyData.precipitation_sum[0] ? dailyData.precipitation_sum[0] : 0;
+  
+  if (precip > 2.0) {
+    // 陰雨天 (Dusk/Ink Theme)
+    document.body.classList.add('theme-rainy');
+    console.log('🌦️ 今日有雨，已切換至沉穩色調模式 (Dusk/Ink)');
+  } else {
+    // 晴天 (Sand/Ocean Theme)
+    document.body.classList.remove('theme-rainy');
+    console.log('☀️ 晴空萬里，已切換至海島亮色模式 (Sand/Ocean)');
   }
 }
 
@@ -1137,6 +1179,14 @@ function renderDayView(dayId) {
       <h2 class="font-heading font-black text-3xl md:text-4xl text-ink tracking-tight mb-2">${day.title}</h2>
       <p class="font-serif text-ink/70 text-sm font-medium leading-relaxed max-w-2xl">${day.intro}</p>
     </div>`;
+
+  // 動態更新 Google Maps Embed
+  const mapContainer = document.getElementById('day-map-container');
+  if(mapContainer) {
+    // 預設取當日第一筆行程的查詢字串當作地圖中心
+    const mapQuery = day.itinerary.length > 0 ? day.itinerary[0].q : 'Okinawa';
+    mapContainer.innerHTML = `<iframe width="100%" height="100%" frameborder="0" style="border:0;" loading="lazy" src="https://maps.google.com/maps?q=${encodeURIComponent(mapQuery)}&t=&z=12&ie=UTF8&iwloc=&output=embed"></iframe>`;
+  }
   
   const tl = document.getElementById('day-timeline');
   tl.innerHTML = day.itinerary.map(it => `
@@ -1258,6 +1308,17 @@ window.handleSearch = (val) => {
     }
     return;
   }
+  // Immediately switch to search view on mobile or desktop if not already there
+  if(state.currentView !== 'view-search') {
+      // Deactivate other nav buttons
+      document.querySelectorAll('.sidebar-btn, .mobile-btn').forEach(b => {
+        b.classList.remove('active-sidebar', 'active-mobile');
+        if(b.classList.contains('sidebar-btn')) b.classList.add('text-ink/60');
+        if(b.classList.contains('mobile-btn')) b.classList.add('text-ink/50');
+      });
+      switchView('view-search');
+  }
+  
   searchTimeout = setTimeout(() => performSearch(val.trim()), 300);
 };
 
@@ -1322,6 +1383,55 @@ window.copyText = (text) => {
   catch (err) { showToast('複製失敗，請手動複製'); }
   document.body.removeChild(textArea);
 };
+
+// ===================== PWA SUPPORT =====================
+function setupPWA() {
+  try {
+    // 1. 動態建立 Manifest 讓手機可以加入主畫面
+    const manifest = {
+      name: "Okinawa 2026 Itinerary",
+      short_name: "Okinawa",
+      display: "standalone",
+      background_color: "#fcfbf9",
+      theme_color: "#4A8594",
+      start_url: ".",
+      icons: [{
+        src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%234A8594' rx='20'/%3E%3Ctext x='50' y='65' fill='white' font-size='50' text-anchor='middle' font-family='sans-serif'%3E🏖️%3C/text%3E%3C/svg%3E",
+        sizes: "192x192",
+        type: "image/svg+xml"
+      }]
+    };
+    const manifestBlob = new Blob([JSON.stringify(manifest)], {type: 'application/json'});
+    const manifestUrl = URL.createObjectURL(manifestBlob);
+    const link = document.createElement('link');
+    link.rel = 'manifest';
+    link.href = manifestUrl;
+    document.head.appendChild(link);
+
+    // 2. 動態註冊 Service Worker (離線快取支援)
+    const swCode = `
+      const CACHE_NAME = 'okinawa-v2';
+      self.addEventListener('install', e => self.skipWaiting());
+      self.addEventListener('fetch', e => {
+        e.respondWith(
+          fetch(e.request).catch(() => caches.match(e.request))
+        );
+      });
+    `;
+    const swBlob = new Blob([swCode], {type: 'application/javascript'});
+    const swUrl = URL.createObjectURL(swBlob);
+    
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register(swUrl).then(reg => {
+        console.log('✅ PWA Service Worker 註冊成功');
+      }).catch(err => {
+        console.warn('⚠️ 環境限制，無法透過 Blob 註冊 PWA，需部署為實體檔案:', err);
+      });
+    }
+  } catch (error) {
+    console.warn('⚠️ PWA 設置被攔截 (開發環境限制):', error);
+  }
+}
 </script>
 </body>
 </html>
