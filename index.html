@@ -459,7 +459,7 @@ tailwind.config = {
   <section id="view-day" class="view-section max-w-5xl mx-auto">
     <div id="day-header" class="mb-8 pb-6 border-b border-ink/10 flex flex-col md:flex-row gap-6 items-start md:items-center"></div>
 
-    <!-- Google Map Embed 靜態圖縮圖 -->
+    <!-- Google Map Embed -->
     <div id="day-map-container" class="glass-card rounded-3xl overflow-hidden border border-white mb-8 h-48 md:h-64 shadow-sm relative">
        <div class="absolute inset-0 flex items-center justify-center text-ink/40 font-bold text-sm"><i class="fas fa-spinner fa-spin mr-2"></i>載入地圖中...</div>
     </div>
@@ -519,7 +519,6 @@ tailwind.config = {
       <p class="text-ink/60 font-bold mt-4 bg-white/40 inline-block px-3 py-1 rounded-lg border border-white" id="search-count"></p>
     </div>
     <div id="search-results" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-       <!-- 預設顯示提示訊息 -->
        <div class="col-span-full text-center py-20 text-ink/30 glass-card rounded-3xl border border-white" id="search-empty-state">
          <div class="text-5xl mb-4 opacity-50">🔍</div>
          <p class="font-bold text-lg">請輸入關鍵字開始搜尋</p>
@@ -529,7 +528,7 @@ tailwind.config = {
   </section>
 </main>
 
-<!-- Mobile Bottom Nav (Floating Pill Style) -->
+<!-- Mobile Bottom Nav -->
 <nav id="mobile-nav" class="md:hidden fixed bottom-4 left-4 right-4 bg-white/90 backdrop-blur-xl border border-white/60 z-50 flex overflow-x-auto no-scroll px-3 py-2 items-center gap-2 rounded-[2rem] shadow-[0_8px_30px_rgb(27,42,48,0.12)] snap-x snap-mandatory pb-safe-adjust">
   <button class="nav-btn mobile-btn snap-center flex-shrink-0 flex items-center justify-center gap-2 px-5 py-3 rounded-full text-ink/50 font-bold transition-all active-mobile" data-target="view-overview">
     <i class="fas fa-compass text-lg"></i> <span class="text-sm tracking-wide">總覽</span>
@@ -551,7 +550,6 @@ tailwind.config = {
   <div id="mobile-day-btns" class="flex gap-2"></div>
 </nav>
 
-<!-- iOS bottom safe area fix for floating nav -->
 <style>
   .pb-safe-adjust { padding-bottom: max(0.5rem, env(safe-area-inset-bottom)); }
 </style>
@@ -617,12 +615,12 @@ const DAYS_DATA = [
       {name:'Zhyvago Coffee Works', area:'美國村', rating:4.6, type:'food', tags:'海景咖啡', desc:'美國村最具質感的工業風咖啡館，伴隨無敵海景。', recommend:'冰拿鐵、手工巧克力軟餅乾'},
       {name:'琉球之牛 北谷店', area:'美國村', rating:4.4, type:'food', tags:'頂級燒肉', desc:'油花分佈完美的頂級縣產和牛，入口即化，建議提前訂位。', recommend:'頂級縣產和牛套餐'},
       {name:'A&W 北谷店', area:'北谷', rating:4.1, type:'food', tags:'美式速食', desc:'沖繩獨有的美式速食！麥根沙士在店內無限續杯。', recommend:'A&W雙層起司堡、麥根沙士'},
-      {name:'Seaside Cafe Hanon', area:'美國村', rating:4.4, type:'food', tags:'海景鬆餅', desc:'純白希臘風格鬆餅專賣店，陽台座位直面大海。', recommend:'焦糖香蕉舒芙蕾鬆餅'},
+      {name:'Seaside Cafe Hanon', area:'美國村', rating:4.4, type:'food', tags:'海景鬆餅', desc:'純白希臘風格鬆餅專專賣店，陽台座位直面大海。', recommend:'焦 caramel 香蕉舒芙蕾鬆餅'},
       {name:'Blue Ocean Steak', area:'北谷', rating:4.6, type:'food', tags:'鐵板牛排', desc:'評價極高的高級牛排館，提供高品質和牛與龍蝦，可賞夕陽。', recommend:'黑毛和牛沙朗、蒜香龍蝦'},
       {name:'海人食堂', area:'讀谷村', rating:4.2, type:'food', tags:'漁港海鮮', desc:'讀谷村都屋漁港旁，產地直銷、便宜大碗的新鮮生魚片。', recommend:'海人丼、炸近海魚定食'},
       {name:'Timeless Chocolate', area:'美國村', rating:4.5, type:'food', tags:'精品巧克力', desc:'沖繩第一家Bean to Bar巧克力，結合黑糖與純可可。', recommend:'黑糖單品巧克力、特濃熱可可'},
       {name:'The Calif Kitchen', area:'美國村', rating:4.4, type:'food', tags:'加州風餐廳', desc:'純白明亮的加州海岸風格，餐點顏值極高且美味。', recommend:'墨西哥捲餅、夏威夷蒜香蝦'},
-      {name:'浜屋沖繩麵', area:'北谷', rating:4.4, type:'food', tags:'沖繩麵', desc:'超人氣沖繩麵！特色是軟嫩到入口即化的豬軟骨。', recommend:'浜屋豬軟骨沖繩麵'},
+      {name:'濱屋沖繩麵', area:'北谷', rating:4.4, type:'food', tags:'沖繩麵', desc:'超人氣沖繩麵！特色是軟嫩到入口即化的豬軟骨。', recommend:'濱屋豬軟骨沖繩麵'},
       {name:'Mintama', area:'讀谷村', rating:4.5, type:'food', tags:'義式居酒屋', desc:'超人氣小店，將義式料理手法與沖繩在地食材結合。', recommend:'墨魚義大利麵、窯烤披薩'},
       {name:"Plowman's Lunch Bakery", area:'北中城村', rating:4.5, type:'food', tags:'山林早午餐', desc:'藏於山坡上的秘境麵包店，天然酵母麵包與濃湯極具水準。', recommend:'豐盛早午餐盤、天然酵母麵包'},
       {name:'現烤冰淇淋菠蘿麵包', area:'AEON Rycom', rating:4.1, type:'food', tags:'人氣甜點', desc:'熱呼呼的酥脆菠蘿麵包夾入冰涼香草冰淇淋，逛街點心首選。', recommend:'香草冰淇淋菠蘿麵包'},
@@ -642,13 +640,13 @@ const DAYS_DATA = [
     tips:['🅿️ 煙火停車場A・B：14:00開放，請導航至「Lawson海洋博公園前店」轉進町道16號線，循指標入場轉乘接駁車','🐳 鯨鯊餵食時間通常是10:00、14:00，可事先查詢當日時間','🎆 煙火大會已預約「棧敷席A(遊玩濱)」，記得手機出示VELTRA憑證','🚗 煙火結束後道路非常擁擠，接駁車營運至23:00，可稍作停留避開人潮'],
     itinerary:[
       {time:'08:00', text:'那霸出發北上', icon:'🚗', q:'Hotel Strata Naha'},
-      {time:'10:04', text:'道の駅 許田休息站', icon:'🏪', q:'道の駅 許田 名護'},
+      {time:'10:04', text:'道の駅 許田休息站', icon:'🏪', q:'道の駅 許田 開護'},
       {time:'11:24', text:'古宇利島 (古宇利大橋)', icon:'🏝️', q:'古宇利島'},
       {time:'14:00', text:'沖繩美麗海水族館', icon:'🐬', q:'沖繩美麗海水族館'},
       {time:'19:00', text:'海洋博煙火大會 (棧敷席A / 停車場A・B)', icon:'🎆', q:'海洋博公園 臨時駐車場'}
     ],
     places:[
-      {name:'Kouri Shrimp', area:'古宇利島', rating:4.4, type:'food', tags:'蒜香蝦', desc:'夏威夷經典蒜香奶油蝦配上白飯，香氣濃郁停不下來。', recommend:'原味蒜蓉蝦蝦飯'},
+      {name:'Kouri Shrimp', area:'古宇利島', rating:4.4, type:'food', tags:'蒜香蝦', desc:'夏威夷經典蒜香奶油蝦配上白飯，香氣濃郁停不下來。', recommend:'原味蒜蓉蝦飯'},
       {name:'岸本食堂', area:'本部町', rating:4.3, type:'food', tags:'百年沖繩麵', desc:'柴灰製作傳統麵條，湯頭有獨特木柴香氣與濃郁鰹魚味。', recommend:'沖繩麵、沖繩炊飯'},
       {name:'花人逢', area:'本部町', rating:4.4, type:'food', tags:'海景披薩', desc:'位於半山腰的古民家，吃著披薩俯瞰瀨底島絕美海景。', recommend:'綜合熱烤披薩'},
       {name:'Captain Kangaroo', area:'名護', rating:4.6, type:'food', tags:'浮誇漢堡', desc:'被網友評為「沖繩最好吃的漢堡」！漢堡肉厚實，配料如山。', recommend:'Sparky 炸洋蔥圈起司漢堡'},
@@ -662,7 +660,7 @@ const DAYS_DATA = [
       {name:'Nakijin Soba', area:'今歸仁村', rating:4.5, type:'food', tags:'古民家沖繩麵', desc:'隱身在傳統古民家中，湯頭清甜淡雅，寧靜鄉村氛圍。', recommend:'特製今歸仁沖繩麵'},
       {name:'八重食堂', area:'名護', rating:4.3, type:'food', tags:'茶壺沖繩麵', desc:'高湯裝在茶壺裡讓客人自己倒，麵條是寬扁麵。', recommend:'綜合三層肉沖繩麵'},
       {name:'宮里そば', area:'名護', rating:4.2, type:'food', tags:'排隊沖繩麵', desc:'名護當地人從小吃到大的名店！', recommend:'排骨沖繩麵、古早味義大利麵'},
-      {name:'A&W 名護店', area:'名護', rating:4.1, type:'food', tags:'美式速食', desc:'前往北部必經之處的A&W，體驗沖繩獨特美日融合飲食文化。', recommend:'辣醬熱狗堡、漂浮麥根沙士'},
+      {name:'A&W 開護店', area:'名護', rating:4.1, type:'food', tags:'美式速食', desc:'前往北部必經之處的A&W，體驗沖繩獨特美日融合飲食文化。', recommend:'辣醬熱狗堡、漂浮麥根沙士'},
       {name:'Ringo Cafe', area:'瀨底島', rating:4.6, type:'food', tags:'法式馬卡龍', desc:'由法國甜點師傅經營，沖繩食材融入法式馬卡龍中。', recommend:'沖繩香檸馬卡龍'},
       {name:'哥倫比亞洋食', area:'名護', rating:4.1, type:'food', tags:'復古洋食', desc:'充滿濃厚昭和風味的老牌洋食餐廳，特大炸蝦定食是經典。', recommend:'特大炸蝦定食'},
       {name:'前田食堂', area:'名護', rating:4.1, type:'food', tags:'牛肉豆芽麵', desc:'以「堆疊如山的黑胡椒牛肉炒豆芽」聞名的豪邁沖繩麵。', recommend:'牛肉炒豆芽沖繩麵'},
@@ -760,7 +758,7 @@ const PHRASES_DATA = [
   { tag: '👋 日常問候', color: 'sky', tw: '謝謝。', ja: 'ありがとうございます。', romaji: 'Arigatō gozaimasu.', speak: 'ありがとうございます' },
   { tag: '👋 日常問候', color: 'sky', tw: '對不起 / 不好意思。', ja: 'すみません。', romaji: 'Sumimasen.', speak: 'すみません' },
   { tag: '🚗 交通問路', color: 'ocean', tw: '請問車站在哪裡？', ja: '駅はどこですか？', romaji: 'Eki wa doko desu ka?', speak: '駅はどこですか' },
-  { tag: '🚗 交通問路', color: 'ocean', tw: '請載我到這個地址。', ja: 'この住所までお願いします。', romaji: 'Kono jūsho made onegaishimasu.', speak: 'この住所までお願いします' },
+  { tag: '🚗 交通問路', color: 'ocean', tw: '請載我到這個地址。', ja: 'この住所までお願いします。', romaji: 'Kono jūsho made onegaishimasu.', speak: '開の住所までお願いします' },
   { tag: '🏨 飯店住宿', color: 'sand', tw: '我要辦理入住。', ja: 'チェックインをお願いします。', romaji: 'Chekkuin o onegaishimasu.', speak: 'チェックインをお願いします' },
   { tag: '🏨 飯店住宿', color: 'sand', tw: '可以寄放行李嗎？', ja: '荷物を預かってもらえますか？', romaji: 'Nimotsu o azukatte moraemasu ka?', speak: '荷物を預かってもらえますか' },
   { tag: '🍽️ 餐廳點餐', color: 'coral', tw: '不好意思，請給我菜單。', ja: 'すみません、メニューをお願いします。', romaji: 'Sumimasen, menyū o onegaishimasu.', speak: 'すみません、メニューをお願いします' },
@@ -777,10 +775,10 @@ let state = {
   placeFilter: 'all',
   phrasesFilter: 'all',
   checklist: JSON.parse(localStorage.getItem('ok_checklist_v3') || '{}'),
-  wishlist: JSON.parse(localStorage.getItem('ok_wishlist_v4') || '[]'), // Use v4 to avoid old bad data
+  wishlist: JSON.parse(localStorage.getItem('ok_wishlist_v4') || '[]'),
   notes: JSON.parse(localStorage.getItem('ok_notes_v3') || '{}'),
   dayNotes: JSON.parse(localStorage.getItem('ok_daynotes_v3') || '{}'),
-  exchangeRate: { TWD: 0.21 } // Fallback
+  exchangeRate: { JPY_TWD: 0.21 }
 };
 
 // ===================== INIT =====================
@@ -791,10 +789,9 @@ document.addEventListener('DOMContentLoaded', () => {
   renderChecklist();
   initNotes();
   renderPhrases();
-  renderWishlist(); // Render wishlist on load
-  setupPWA(); // 初始化 PWA 離線支援
+  renderWishlist();
+  setupPWA();
   
-  // Highlight default
   document.querySelector('.sidebar-btn[data-target="view-overview"]')?.classList.add('active-sidebar');
   document.querySelector('.mobile-btn[data-target="view-overview"]')?.classList.add('active-mobile');
 });
@@ -838,7 +835,11 @@ function setupNavClicks() {
       const matches = document.querySelectorAll(`.nav-btn[data-target="${tgt}"]${dayId?`[data-day="${dayId}"]`:':not([data-day])'}`);
       matches.forEach(b => {
         if(b.classList.contains('sidebar-btn')) { b.classList.add('active-sidebar'); b.classList.remove('text-ink/60'); }
-        if(b.classList.contains('mobile-btn')) { b.classList.add('active-mobile'); b.classList.remove('text-ink/50'); b.scrollIntoView({behavior: "smooth", block: "nearest", inline: "center"});}
+        if(b.classList.contains('mobile-btn')) { 
+          b.classList.add('active-mobile'); 
+          b.classList.remove('text-ink/50'); 
+          b.scrollIntoView({behavior: "smooth", block: "nearest", inline: "center"});
+        }
       });
       
       switchView(tgt, dayId);
@@ -877,7 +878,6 @@ function initOverview() {
 
 async function fetchWeatherAndMarine() {
   try {
-    // Add sunrise, sunset, precipitation, rain probability, and UV index
     const [wr, mr] = await Promise.all([
       fetch('https://api.open-meteo.com/v1/forecast?latitude=26.2124&longitude=127.6809&daily=temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_sum,precipitation_probability_max,sunrise,sunset&timezone=Asia%2FTokyo'),
       fetch('https://marine-api.open-meteo.com/v1/marine?latitude=26.2124&longitude=127.6809&daily=wave_height_max&timezone=Asia%2FTokyo')
@@ -887,29 +887,22 @@ async function fetchWeatherAndMarine() {
     renderWeatherChart(wd.daily);
     renderEnvironmentData(wd.daily);
     renderMarineData(md.daily);
-    applyWeatherTheme(wd.daily); // 根據天氣調整情緒色調
+    applyWeatherTheme(wd.daily);
   } catch(e) {
     document.getElementById('marine-data').innerHTML = '<span class="text-coral text-xs font-bold">無法取得資料，請檢查網路</span>';
   }
 }
 
 function applyWeatherTheme(dailyData) {
-  // 取得今天的預估降雨量 (mm)
   const precip = dailyData.precipitation_sum && dailyData.precipitation_sum[0] ? dailyData.precipitation_sum[0] : 0;
-  
   if (precip > 2.0) {
-    // 陰雨天 (Dusk/Ink Theme)
     document.body.classList.add('theme-rainy');
-    console.log('🌦️ 今日有雨，已切換至沉穩色調模式 (Dusk/Ink)');
   } else {
-    // 晴天 (Sand/Ocean Theme)
     document.body.classList.remove('theme-rainy');
-    console.log('☀️ 晴空萬里，已切換至海島亮色模式 (Sand/Ocean)');
   }
 }
 
 function renderEnvironmentData(data) {
-  // Use today's data (index 0)
   if(data.precipitation_probability_max && data.precipitation_probability_max.length > 0) {
     document.getElementById('rain-prob').textContent = data.precipitation_probability_max[0] + '%';
   }
@@ -917,7 +910,6 @@ function renderEnvironmentData(data) {
     document.getElementById('uv-index').textContent = data.uv_index_max[0].toFixed(1);
   }
   if(data.sunset && data.sunset.length > 0) {
-    // Extract HH:MM from ISO string
     const sunsetTime = new Date(data.sunset[0]).toLocaleTimeString('ja-JP', {hour: '2-digit', minute:'2-digit', hour12: false});
     document.getElementById('sunset-time').textContent = sunsetTime;
   }
@@ -971,7 +963,7 @@ async function fetchCurrency() {
   try {
     const res = await fetch('https://api.exchangerate-api.com/v4/latest/JPY');
     const data = await res.json();
-    state.exchangeRate.TWD = data.rates.TWD;
+    state.exchangeRate.JPY_TWD = data.rates.TWD;
     
     const updated = new Date().toLocaleTimeString('zh-TW', {hour:'2-digit', minute:'2-digit'});
     document.getElementById('rateUpdate').innerHTML = `<i class="fas fa-sync-alt mr-1"></i> ${updated}`;
@@ -985,7 +977,7 @@ function updateCurrency() {
   const jpyInput = document.getElementById('jpyInput');
   if(!jpyInput) return;
   const jpy = parseFloat(jpyInput.value) || 0;
-  const twd = Math.round(jpy * state.exchangeRate.TWD);
+  const twd = Math.round(jpy * state.exchangeRate.JPY_TWD);
   document.getElementById('twdOutput').textContent = twd.toLocaleString();
 }
 
@@ -1072,11 +1064,9 @@ window.toggleWishlist = (dayId, placeIndex) => {
   const existingIndex = state.wishlist.findIndex(w => w.key === key);
   
   if(existingIndex >= 0) {
-    // Remove from wishlist
     state.wishlist.splice(existingIndex, 1);
     showToast(`已移除「${place.name}」`);
   } else {
-    // Add to wishlist
     state.wishlist.push({ 
       key, 
       dayId, 
@@ -1092,14 +1082,19 @@ window.toggleWishlist = (dayId, placeIndex) => {
     showToast(`已收藏「${place.name}」❤️`);
   }
   
-  // Save to local storage
   localStorage.setItem('ok_wishlist_v4', JSON.stringify(state.wishlist));
-  
-  // Sync the UI globally for this specific place key
   syncWishlistButtons(key);
-  
-  // Re-render the wishlist page if it's currently active or globally
   renderWishlist();
+  
+  // 如果在當前天數或搜尋頁，同步重繪
+  if(state.currentView === 'view-day' && state.currentDayId === dayId) {
+    renderPlaces(day);
+  } else if(state.currentView === 'view-search') {
+    const desktopInput = document.getElementById('quickSearch');
+    if(desktopInput && desktopInput.value.trim()) {
+      performSearch(desktopInput.value.trim());
+    }
+  }
 };
 
 function syncWishlistButtons(key) {
@@ -1108,7 +1103,6 @@ function syncWishlistButtons(key) {
   
   btns.forEach(btn => {
     btn.innerHTML = `<i class="${isWished ? 'fas' : 'far'} fa-heart ${isWished ? 'text-sm' : 'text-xs'}"></i>`;
-    
     if (isWished) {
       btn.classList.add('text-coral', 'border-coral/30', 'bg-coral/10');
       btn.classList.remove('text-ink/30', 'hover:bg-coral/10', 'hover:text-coral', 'border-white', 'bg-white');
@@ -1204,10 +1198,8 @@ function renderDayView(dayId) {
       <p class="font-serif text-ink/70 text-sm font-medium leading-relaxed max-w-2xl">${day.intro}</p>
     </div>`;
 
-  // 動態更新 Google Maps Embed
   const mapContainer = document.getElementById('day-map-container');
   if(mapContainer) {
-    // 預設取當日第一筆行程的查詢字串當作地圖中心
     const mapQuery = day.itinerary.length > 0 ? day.itinerary[0].q : 'Okinawa';
     mapContainer.innerHTML = `<iframe width="100%" height="100%" frameborder="0" style="border:0;" loading="lazy" src="https://maps.google.com/maps?q=${encodeURIComponent(mapQuery)}&t=&z=12&ie=UTF8&iwloc=&output=embed"></iframe>`;
   }
@@ -1271,7 +1263,10 @@ function renderPlaces(day) {
   const container = document.getElementById('day-places');
   const filtered = state.placeFilter === 'all' ? day.places : day.places.filter(p => p.type === state.placeFilter);
   
-  if(!filtered.length) { container.innerHTML = '<div class="col-span-2 text-center py-12 text-ink/30 font-bold glass-card rounded-3xl border border-white">沒有符合分類的項目</div>'; return; }
+  if(!filtered.length) { 
+    container.innerHTML = '<div class="col-span-2 text-center py-12 text-ink/30 glass-card rounded-3xl border border-white">沒有符合分類的項目</div>'; 
+    return; 
+  }
   
   container.innerHTML = filtered.map((p, i) => {
     const origIdx = day.places.indexOf(p);
@@ -1313,7 +1308,7 @@ window.switchDayTab = (tab) => {
   document.querySelectorAll('[id^="day-tab-"]').forEach(el => el.classList.add('hidden'));
   document.getElementById(`day-tab-${tab}`)?.classList.remove('hidden');
   
-  ['itinerary','places','map'].forEach(t => {
+  ['itinerary','places'].forEach(t => {
     const btn = document.getElementById(`tab-${t}`);
     if(!btn) return;
     btn.classList.toggle('bg-white', t===tab);
@@ -1324,17 +1319,13 @@ window.switchDayTab = (tab) => {
 };
 
 window.openMobileSearch = () => {
-  // 切換到搜尋視圖
   switchView('view-search');
-  
-  // 清除導航按鈕的 active 狀態
   document.querySelectorAll('.sidebar-btn, .mobile-btn').forEach(b => {
     b.classList.remove('active-sidebar', 'active-mobile');
     if(b.classList.contains('sidebar-btn')) b.classList.add('text-ink/60');
     if(b.classList.contains('mobile-btn')) b.classList.add('text-ink/50');
   });
 
-  // 嘗試聚焦手機版搜尋框，使用 setTimeout 確保視圖已顯示
   setTimeout(() => {
     const mobileInput = document.getElementById('mobileQuickSearch');
     if (mobileInput) mobileInput.focus();
@@ -1345,7 +1336,6 @@ let searchTimeout;
 window.handleSearch = (val, source = 'desktop') => {
   clearTimeout(searchTimeout);
   
-  // 同步兩個輸入框的值 (如果存在)
   if (source === 'desktop') {
      const mobileInput = document.getElementById('mobileQuickSearch');
      if(mobileInput) mobileInput.value = val;
@@ -1354,9 +1344,7 @@ window.handleSearch = (val, source = 'desktop') => {
      if(desktopInput) desktopInput.value = val;
   }
 
-  // Immediately switch to search view on mobile or desktop if not already there
   if(state.currentView !== 'view-search') {
-      // Deactivate other nav buttons
       document.querySelectorAll('.sidebar-btn, .mobile-btn').forEach(b => {
         b.classList.remove('active-sidebar', 'active-mobile');
         if(b.classList.contains('sidebar-btn')) b.classList.add('text-ink/60');
@@ -1442,7 +1430,6 @@ window.copyText = (text) => {
 // ===================== PWA SUPPORT =====================
 function setupPWA() {
   try {
-    // 1. 動態建立 Manifest 讓手機可以加入主畫面
     const manifest = {
       name: "Okinawa 2026 Itinerary",
       short_name: "Okinawa",
@@ -1463,7 +1450,6 @@ function setupPWA() {
     link.href = manifestUrl;
     document.head.appendChild(link);
 
-    // 2. 動態註冊 Service Worker (離線快取支援)
     const swCode = `
       const CACHE_NAME = 'okinawa-v2';
       self.addEventListener('install', e => self.skipWaiting());
@@ -1478,13 +1464,13 @@ function setupPWA() {
     
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register(swUrl).then(reg => {
-        console.log('✅ PWA Service Worker 註冊成功');
+        console.log('PWA Service Worker 註冊安全容錯載入成功');
       }).catch(err => {
-        console.warn('⚠️ 環境限制，無法透過 Blob 註冊 PWA，需部署為實體檔案:', err);
+        console.warn('PWA 載入受限:', err);
       });
     }
   } catch (error) {
-    console.warn('⚠️ PWA 設置被攔截 (開發環境限制):', error);
+    console.warn('PWA 設置被攔截 (環境限制):', error);
   }
 }
 </script>
