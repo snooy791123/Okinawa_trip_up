@@ -69,7 +69,7 @@ tailwind.config = {
   .view-section.active { display:block; }
   @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
   
-  /* 隱藏原生滾動條，保持畫面純淨 */
+  /* 隱藏原生滾動條 */
   .custom-scroll::-webkit-scrollbar { width: 0px; display: none; }
   .custom-scroll { -ms-overflow-style: none; scrollbar-width: none; }
   
@@ -98,10 +98,9 @@ tailwind.config = {
   #toast { position:fixed; bottom: 6.5rem; left:50%; transform:translateX(-50%) translateY(20px) scale(0.95); background: rgba(27,42,48,0.95); backdrop-filter: blur(8px); color:white; padding: 0.8rem 1.5rem; border-radius: 99px; font-size: 0.85rem; font-weight:700; opacity:0; transition:all 0.4s cubic-bezier(0.16, 1, 0.3, 1); z-index:9999; pointer-events:none; box-shadow: 0 10px 25px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.1); }
   #toast.show { opacity:1; transform:translateX(-50%) translateY(0) scale(1); }
 
-  /* 琉璃卡片共用類別 */
   .glass-card { background: var(--glass); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid var(--glassBorder); box-shadow: var(--glass), var(--inner-light); }
 
-  /* 情緒天氣同步 - 雨天模式 (Dusk/Ink 色調) */
+  /* 雨天模式 */
   body.theme-rainy {
     background: linear-gradient(135deg, #c4d4d9 0%, #a2b8c2 50%, #879ea8 100%);
   }
@@ -120,7 +119,6 @@ tailwind.config = {
 
 <div id="toast"></div>
 
-<!-- Mobile Header (Glass) -->
 <header class="md:hidden glass-card px-5 py-3.5 flex justify-between items-center sticky top-0 z-40 rounded-b-3xl mb-4 mx-2 mt-2 shadow-sm">
   <div class="font-heading font-black text-xl text-ink tracking-tight">Okinawa <span class="text-ocean">2026</span></div>
   <button onclick="openMobileSearch()" class="w-9 h-9 flex items-center justify-center rounded-full bg-white/60 text-ink/70 hover:text-ink transition shadow-sm border border-white">
@@ -134,7 +132,6 @@ tailwind.config = {
     <div class="inline-block mt-3 px-3 py-1 bg-ink text-white rounded-full font-mono text-xs font-bold shadow-sm">2026.07.02 - 07.06</div>
   </div>
   
-  <!-- Quick Search -->
   <div class="relative mb-6">
     <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-ink/40 text-sm"></i>
     <input id="quickSearch" type="text" placeholder="搜尋景點、美食..." class="w-full pl-10 pr-4 py-3 text-sm bg-white/60 backdrop-blur-md border border-white shadow-inner-light rounded-2xl font-sans outline-none focus:bg-white transition placeholder:text-ink/40" oninput="handleSearch(this.value)">
@@ -165,7 +162,6 @@ tailwind.config = {
 
 <main class="flex-1 overflow-y-auto custom-scroll p-4 pb-32 md:p-8 lg:p-12" id="mainContent">
   
-  <!-- VIEW: OVERVIEW -->
   <section id="view-overview" class="view-section active max-w-5xl mx-auto">
     <div class="mb-10 text-center md:text-left flex flex-col md:flex-row md:items-end justify-between gap-4">
       <div>
@@ -180,7 +176,6 @@ tailwind.config = {
       </div>
     </div>
 
-    <!-- Quick Links Row -->
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
       <a href="https://vjw-lp.digital.go.jp/zh-hant/" target="_blank" class="glass-card flex flex-col items-center justify-center p-4 rounded-3xl hover:bg-white/80 transition group border border-white">
         <div class="w-12 h-12 rounded-full bg-sky/10 flex items-center justify-center text-sky mb-2 group-hover:scale-110 group-hover:bg-sky group-hover:text-white transition duration-300 shadow-sm"><i class="fas fa-passport text-lg"></i></div>
@@ -201,7 +196,6 @@ tailwind.config = {
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-      <!-- API 1: Weather Chart & Sun/UV -->
       <div class="glass-card rounded-3xl p-6 lg:col-span-2 border border-white flex flex-col">
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
           <div class="flex items-center gap-3">
@@ -212,7 +206,6 @@ tailwind.config = {
             </div>
           </div>
           
-          <!-- Weather Dashboard (Rain, UV, Sunset) -->
           <div class="flex gap-3 bg-white/50 backdrop-blur-sm px-4 py-2.5 rounded-2xl border border-white/60 shadow-inner-light overflow-x-auto no-scroll">
             <div class="flex items-center gap-2 pr-3 border-r border-ink/10 flex-shrink-0">
               <i class="fas fa-umbrella text-sky text-sm"></i>
@@ -243,7 +236,6 @@ tailwind.config = {
         </div>
       </div>
 
-      <!-- Marine -->
       <div class="glass-card rounded-3xl p-6 border border-white">
         <div class="flex items-center gap-3 mb-5">
           <div class="w-10 h-10 rounded-full bg-sky/10 flex items-center justify-center text-sky"><i class="fas fa-water text-lg"></i></div>
@@ -251,11 +243,10 @@ tailwind.config = {
         </div>
         <p class="text-xs font-medium text-ink/50 mb-4 bg-white/40 px-3 py-2 rounded-xl inline-block border border-white/50">浪高 &lt; 1m 適宜潛水；&gt; 1.5m 請注意安全</p>
         <div id="marine-data" class="flex gap-3 overflow-x-auto no-scroll pb-2">
-          <span class="text-sm font-bold text-ink/40 animate-pulse flex items-center gap-2"><i class="fas fa-spinner fa-spin"></i> 載入海象數據中...</span>
+          <span class="text-sm font-bold text-ink/40 animate-pulse flex items-center gap-2"><i class="fas fa-spin fa-spinner"></i> 載入海象數據中...</span>
         </div>
       </div>
 
-      <!-- Live Currency -->
       <div class="glass-card rounded-3xl p-6 border border-white">
         <div class="flex justify-between items-start mb-5">
           <div class="flex items-center gap-3">
@@ -280,7 +271,6 @@ tailwind.config = {
     </div>
   </section>
 
-  <!-- VIEW: CHECKLIST -->
   <section id="view-checklist" class="view-section max-w-4xl mx-auto">
     <div class="mb-8">
       <h2 class="font-heading font-black text-4xl text-ink mb-2">出發準備清單</h2>
@@ -305,7 +295,6 @@ tailwind.config = {
     <div id="checklist-container" class="grid grid-cols-1 md:grid-cols-2 gap-5"></div>
   </section>
 
-  <!-- VIEW: TOOLS -->
   <section id="view-tools" class="view-section max-w-5xl mx-auto">
     <div class="mb-8 text-center md:text-left flex justify-between items-end">
       <div>
@@ -314,13 +303,11 @@ tailwind.config = {
       </div>
     </div>
 
-    <!-- Tools Navigation Tabs -->
     <div class="flex gap-2 overflow-x-auto no-scroll mb-6 pb-2 px-1">
       <button class="tool-tab px-5 py-3 text-sm font-bold rounded-full bg-ink text-white shadow-md transition flex-shrink-0" onclick="switchToolTab(this, 'size')"><i class="fas fa-ruler-combined mr-2"></i>尺寸對照表</button>
       <button class="tool-tab px-5 py-3 text-sm font-bold rounded-full bg-white/60 text-ink/60 hover:bg-white border border-white transition flex-shrink-0" onclick="switchToolTab(this, 'info')"><i class="fas fa-ticket-alt mr-2"></i>票券與備忘</button>
     </div>
 
-    <!-- TAB 3: SIZE CONVERTER -->
     <div id="tool-size" class="tool-content active glass-card border border-white rounded-3xl p-6 lg:p-8">
       <div class="flex items-center gap-3 mb-6">
         <div class="w-10 h-10 rounded-full bg-sky/10 flex items-center justify-center text-sky"><i class="fas fa-ruler-combined text-lg"></i></div>
@@ -331,7 +318,6 @@ tailwind.config = {
       </div>
       
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- 女鞋 -->
         <div class="bg-white/60 border border-white shadow-sm rounded-2xl overflow-hidden">
           <div class="bg-ocean/10 px-4 py-3 font-bold text-ink text-sm flex items-center gap-2"><i class="fas fa-shoe-prints text-ocean"></i>女鞋尺寸 (Women)</div>
           <table class="w-full text-sm text-center">
@@ -348,7 +334,6 @@ tailwind.config = {
             </tbody>
           </table>
         </div>
-        <!-- 男鞋 -->
         <div class="bg-white/60 border border-white shadow-sm rounded-2xl overflow-hidden">
           <div class="bg-mint/10 px-4 py-3 font-bold text-ink text-sm flex items-center gap-2"><i class="fas fa-shoe-prints text-mint"></i>男鞋尺寸 (Men)</div>
           <table class="w-full text-sm text-center">
@@ -368,10 +353,8 @@ tailwind.config = {
       </div>
     </div>
 
-    <!-- TAB 4: INFO & NOTES -->
-    <div id="tool-info" class="tool-content hidden">
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-6">
-        <!-- 住宿 -->
+    <div id="tool-info" class="tool-content hidden space-y-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         <div class="glass-card rounded-3xl p-5 border border-white">
           <h3 class="font-heading font-black text-ink mb-3"><i class="fas fa-hotel text-ocean mr-2"></i>住宿資訊</h3>
           <div class="bg-white/50 rounded-xl px-4 py-3 relative border border-white">
@@ -385,7 +368,6 @@ tailwind.config = {
             <button onclick="copyText('Hotel Strata Naha')" class="absolute top-3 right-3 text-xs w-7 h-7 flex items-center justify-center rounded-lg bg-white text-ocean hover:bg-ocean hover:text-white transition shadow-sm border border-ocean/10"><i class="fas fa-copy"></i></button>
           </div>
         </div>
-        <!-- 航班 -->
         <div class="glass-card rounded-3xl p-5 border border-white">
           <h3 class="font-heading font-black text-ink mb-3"><i class="fas fa-plane text-coral mr-2"></i>航班與租車</h3>
           <div class="space-y-2">
@@ -406,7 +388,6 @@ tailwind.config = {
             </div>
           </div>
         </div>
-        <!-- 煙火票券 -->
         <div class="glass-card rounded-3xl p-5 border border-white">
           <h3 class="font-heading font-black text-ink mb-3"><i class="fas fa-ticket-alt text-sand mr-2"></i>活動票券</h3>
           <div class="bg-white/50 rounded-xl px-4 py-3 relative border border-white">
@@ -417,21 +398,45 @@ tailwind.config = {
               <div class="flex justify-between items-center"><span>停車場A・B</span><span class="font-sans font-bold tracking-wide text-ink/70">#9058502</span></div>
             </div>
             <div class="mt-2 text-[10px] text-ink/60 bg-white/60 px-2 py-1.5 rounded-lg border border-white leading-relaxed font-bold">
-              📍 <a href="https://google.com/maps/search/?api=1&query=%E6%B5%B7%E6%B4%8B%E5%8D%9A%E5%85%AC%E5%9C%92+%E8%87%A8%E6%99%82%E9%A7%90%E8%BB%8A%E5%A0%B4" target="_blank" class="text-ocean underline decoration-ocean/30 hover:text-ocean/70 transition">導航至臨時駐車場A・B</a><br>🕒 14:00開放，搭乘免費接駁車。
+              📍 <a href="http://maps.google.com/?q=Lawson+海洋博公園前店" target="_blank" class="text-ocean underline decoration-ocean/30 hover:text-ocean/70 transition">導航至臨時駐車場A・B</a><br>🕒 14:00開放，搭乘免費接駁車。
             </div>
           </div>
         </div>
       </div>
       
-      <!-- Free Note Area -->
-      <div class="glass-card rounded-3xl p-5 border border-white">
-        <h3 class="font-heading font-black text-ink mb-3"><i class="fas fa-edit text-dusk mr-2"></i>自由備忘錄</h3>
-        <textarea id="note1" rows="4" placeholder="記下任何想法... 朋友推薦、臨時變動等" class="w-full bg-white/50 rounded-xl text-sm text-ink font-sans font-bold border border-white p-4 leading-relaxed outline-none" oninput="saveNote('note1', this.value)"></textarea>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div class="glass-card rounded-3xl p-5 border border-white">
+          <h3 class="font-heading font-black text-ink mb-3"><i class="fas fa-music text-coral mr-2"></i>夜生活預訂</h3>
+          <div class="bg-white/50 rounded-xl px-4 py-3 relative border border-white">
+            <div class="flex justify-between items-start">
+              <div>
+                <div class="font-black text-ink">沖繩 ちゅらさん 6 (Churasun 6)</div>
+                <div class="text-ink/40 text-[11px] font-bold mt-0.5">沖繩大型秀場 showCLUB</div>
+              </div>
+              <span class="font-mono text-[10px] font-black text-white bg-ink px-2 py-0.5 rounded shadow-sm">NT$ 8,989</span>
+            </div>
+            <div class="text-ink/60 text-xs mt-3 font-bold flex items-center gap-1.5"><i class="far fa-calendar-alt text-ocean"></i> 7/3 (五) 第二場表演 22:30 開演</div>
+            <div class="text-ink/50 text-[11px] mt-2 border-t border-ink/5 pt-2 flex justify-between items-center font-mono font-bold">
+              <span>座位：6 x 震撼座位 (含10張小費券)</span>
+              <span class="text-ink/80">單號: RHA855634</span>
+            </div>
+            <div class="mt-2 text-[10px] text-coral font-bold bg-coral/5 px-2 py-1.5 rounded-lg border border-coral/10">
+              🚫 本訂單已確認，不可取消。開演前請預留充足通勤時間返回市區。
+            </div>
+            <button onclick="copyText('RHA855634')" class="absolute top-3 right-3 text-xs w-7 h-7 flex items-center justify-center rounded-lg bg-white text-ocean hover:bg-ocean hover:text-white transition shadow-sm border border-ocean/10" title="複製訂單編號"><i class="fas fa-copy"></i></button>
+          </div>
+        </div>
+        
+        <div class="glass-card rounded-3xl p-5 border border-white flex flex-col justify-between">
+          <div>
+            <h3 class="font-heading font-black text-ink mb-3"><i class="fas fa-edit text-dusk mr-2"></i>自由備忘錄</h3>
+            <textarea id="note1" rows="4" placeholder="記下任何想法... 朋友推薦、臨時變動等" class="w-full bg-white/50 rounded-xl text-sm text-ink font-sans font-bold border border-white p-4 leading-relaxed outline-none" oninput="saveNote('note1', this.value)"></textarea>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- VIEW: WISHLIST -->
   <section id="view-wishlist" class="view-section max-w-5xl mx-auto">
     <div class="mb-8">
       <h2 class="font-heading font-black text-4xl text-ink mb-2 tracking-tight">我的收藏清單 ❤️</h2>
@@ -445,7 +450,6 @@ tailwind.config = {
     <div id="wishlist-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
   </section>
 
-  <!-- VIEW: PHRASES -->
   <section id="view-phrases" class="view-section max-w-5xl mx-auto">
     <div class="mb-8">
       <h2 class="font-heading font-black text-4xl text-ink mb-2 tracking-tight">急救日文小卡 🗣️</h2>
@@ -455,22 +459,18 @@ tailwind.config = {
     <div id="phrases-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
   </section>
 
-  <!-- VIEW: DAY DETAIL -->
   <section id="view-day" class="view-section max-w-5xl mx-auto">
     <div id="day-header" class="mb-8 pb-6 border-b border-ink/10 flex flex-col md:flex-row gap-6 items-start md:items-center"></div>
 
-    <!-- Google Map Embed -->
     <div id="day-map-container" class="glass-card rounded-3xl overflow-hidden border border-white mb-8 h-48 md:h-64 shadow-sm relative">
-       <div class="absolute inset-0 flex items-center justify-center text-ink/40 font-bold text-sm"><i class="fas fa-spinner fa-spin mr-2"></i>載入地圖中...</div>
+       <div class="absolute inset-0 flex items-center justify-center text-ink/40 font-bold text-sm"><i class="fas fa-spin fa-spinner mr-2"></i>載入地圖中...</div>
     </div>
 
-    <!-- Day Tabs -->
     <div class="flex gap-2 mb-8 bg-white/40 p-1.5 rounded-full w-fit border border-white/60 shadow-inner-light backdrop-blur-sm">
       <button id="tab-itinerary" onclick="switchDayTab('itinerary')" class="px-5 py-2 text-sm font-heading font-bold rounded-full bg-white shadow-sm text-ink transition">📍 行程時間軸</button>
       <button id="tab-places" onclick="switchDayTab('places')" class="px-5 py-2 text-sm font-heading font-bold rounded-full text-ink/60 hover:text-ink transition">🍜 探索與美食 (20選)</button>
     </div>
 
-    <!-- Itinerary Tab -->
     <div id="day-tab-itinerary" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
       <div class="lg:col-span-1">
         <div class="glass-card rounded-3xl p-6 border border-white sticky top-4">
@@ -494,7 +494,6 @@ tailwind.config = {
       </div>
     </div>
 
-    <!-- Places Tab -->
     <div id="day-tab-places" class="hidden">
       <div class="flex flex-wrap gap-2 mb-6 px-1" id="place-filters">
         <button class="filter-btn filter-active px-4 py-2 rounded-full text-xs font-bold border border-ink/10 transition shadow-sm" data-filter="all">全部</button>
@@ -505,12 +504,10 @@ tailwind.config = {
     </div>
   </section>
 
-  <!-- Search Results -->
   <section id="view-search" class="view-section max-w-5xl mx-auto">
     <div class="mb-8">
       <h2 class="font-heading font-black text-4xl text-ink tracking-tight">搜尋結果</h2>
       
-      <!-- 手機版專用搜尋列 -->
       <div class="mt-4 relative md:hidden">
         <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-ink/40 text-sm"></i>
         <input id="mobileQuickSearch" type="text" placeholder="搜尋景點、美食..." class="w-full pl-10 pr-4 py-3 text-sm bg-white/60 backdrop-blur-md border border-white shadow-inner-light rounded-2xl font-sans outline-none focus:bg-white transition placeholder:text-ink/40" oninput="handleSearch(this.value, 'mobile')">
@@ -528,7 +525,6 @@ tailwind.config = {
   </section>
 </main>
 
-<!-- Mobile Bottom Nav -->
 <nav id="mobile-nav" class="md:hidden fixed bottom-4 left-4 right-4 bg-white/90 backdrop-blur-xl border border-white/60 z-50 flex overflow-x-auto no-scroll px-3 py-2 items-center gap-2 rounded-[2rem] shadow-[0_8px_30px_rgb(27,42,48,0.12)] snap-x snap-mandatory pb-safe-adjust">
   <button class="nav-btn mobile-btn snap-center flex-shrink-0 flex items-center justify-center gap-2 px-5 py-3 rounded-full text-ink/50 font-bold transition-all active-mobile" data-target="view-overview">
     <i class="fas fa-compass text-lg"></i> <span class="text-sm tracking-wide">總覽</span>
@@ -593,10 +589,10 @@ const DAYS_DATA = [
     ]
   },
   { id:'day2', num:'02', date:'7月3日', color:'mint', hex:'#72A98F',
-    title:'中北部與美國村',
-    subtitle:'早晨走訪安良波海灘，體驗青洞潛水，漫遊琉球村，傍晚Rycom血拚。',
-    intro:'第二天行程豐富！離開市區感受中部風情，涵蓋海灘漫步、水下體驗、文化村落，以阿古豬火鍋完美收尾。',
-    tips:['🤿 潛水前一晚不要飲酒，早餐吃清淡','🚗 美國村停車場週末很搶手，可停稍遠的停車場再走過來','🌅 BANTA CAFE 建議傍晚前抵達欣賞夕陽','🛒 Rycom 比那霸大很多，記得帶大購物袋'],
+    title:'中北部與美國村（精采夜生活秀）',
+    subtitle:'早晨走訪安良波海灘，體驗青洞潛水，漫遊美國村與 Rycom 血拚，深夜返回市區體驗震撼 showCLUB 演出。',
+    intro:'第二天行程豐富！離開市區感受中部風情，涵蓋海灘漫步、水下體驗與大型商場血拚，午夜前返回那霸市區觀賞熱血澎湃的日本頂級舞台歌舞秀。',
+    tips:['🤿 潛水前一晚不要飲酒，早餐吃清淡','🚗 美國村停車場週末很搶手，可停稍遠的停車場再走過來','🛒 Rycom 規模大品牌多，退稅排隊較久，請拿捏好返回市區的時間','💃 Churasun 6 秀場於 22:30 準時開演，建議提早 15-20 分鐘抵達現場換卡核銷'],
     itinerary:[
       {time:'08:30', text:'搭車前往那霸機場', icon:'🚕', q:'那霸機場'},
       {time:'09:00', text:'Kuruca租車 取車', icon:'🚗', q:'沖繩縣豐見城市我那霸295-4'},
@@ -606,11 +602,13 @@ const DAYS_DATA = [
       {time:'13:23', text:'黑潮潛水｜沖繩青洞', icon:'🤿', q:'黑潮潛水 恩納村'},
       {time:'13:45', text:'琉球村', icon:'🏯', q:'琉球村 恩納村'},
       {time:'16:01', text:'BANTA CAFE 夕陽咖啡', icon:'☕', q:'Hoshino Resorts BANTA CAFE'},
-      {time:'17:41', text:'AEON MALL Rycom', icon:'🏬', q:'AEON MALL Okinawa Rycom'},
+      {time:'17:41', text:'AEON MALL Rycom 購物', icon:'🏬', q:'AEON MALL Okinawa Rycom'},
       {time:'19:24', text:'Itoya 阿古豬火鍋晚餐', icon:'🍲', q:'Itoya 阿古豬火鍋 沖繩'},
-      {time:'22:20', text:'返回 Hotel Strata Naha', icon:'🏨', q:'Hotel Strata Naha'}
+      {time:'22:00', text:'駕車返回那霸市區 / 放車回酒店', icon:'🚗', q:'Hotel Strata Naha'},
+      {time:'22:30', text:'沖繩 Churasun 6 大型 showCLUB 表演', icon:'✨', q:'Churasun 6 沖縄'}
     ],
     places:[
+      {name:'Churasun 6 (ちゅらさん6)', area:'那霸市區', rating:4.8, type:'sight', tags:'大型秀場/夜生活', desc:'沖繩天花板級別的性感熱血歌舞秀！高水準燈光舞台與動感鋼管、鋼絲飛行特技，氣氛超級嗨。', recommend:'震撼座位區（含10張互動小費券）'},
       {name:'Taco Rice Cafe Kijimuna', area:'美國村', rating:4.4, type:'food', tags:'塔可飯', desc:'將沖繩美食「塔可飯」加上滑嫩歐姆蛋，超人氣創意料理。', recommend:'酪梨歐姆塔可飯'},
       {name:'Zhyvago Coffee Works', area:'美國村', rating:4.6, type:'food', tags:'海景咖啡', desc:'美國村最具質感的工業風咖啡館，伴隨無敵海景。', recommend:'冰拿鐵、手工巧克力軟餅乾'},
       {name:'琉球之牛 北谷店', area:'美國村', rating:4.4, type:'food', tags:'頂級燒肉', desc:'油花分佈完美的頂級縣產和牛，入口即化，建議提前訂位。', recommend:'頂級縣產和牛套餐'},
@@ -685,7 +683,7 @@ const DAYS_DATA = [
       {name:'Cafe Kurukuma', area:'南城市', rating:4.4, type:'food', tags:'海景泰式', desc:'南部最著名的無敵海景餐廳！能將太平洋盡收眼底。', recommend:'特製綜合泰式咖哩'},
       {name:'中本鮮魚天婦羅店', area:'奧武島', rating:4.2, type:'food', tags:'沖繩天婦羅', desc:'南部奧武島名店，天婦羅麵衣厚實鬆軟，價格極其便宜。', recommend:'炸水雲、炸花枝'},
       {name:'濱邊的茶屋', area:'南城市', rating:4.4, type:'food', tags:'沙灘咖啡', desc:'沖繩海景咖啡館先驅。漲潮時海水就在窗戶正下方。', recommend:'手作起司蛋糕、扶桑花茶'},
-      {name:'黑糖可麗露 ほうき星', area:'港川外人住宅', rating:4.5, type:'food', tags:'精緻甜點', desc:'本店氣氛復古可愛，黑糖可麗露外酥內軟，打卡必備。', recommend:'多良間島黑糖原味可麗露'},
+      {name:'黑糖可麗露 ほうき星', area:'港川外人住宅', rating:4.5, type:'food', tags:'精點甜點', desc:'本店氣氛復古可愛，黑糖可麗露外酥內軟，打卡必備。', recommend:'多良間島黑糖原味可麗露'},
       {name:'博多一風堂', area:'PARCO CITY', rating:4.1, type:'food', tags:'豚骨拉麵', desc:'在購物商場內想快速吃一碗熱騰騰美食的絕佳選擇。', recommend:'白丸元味、特製赤丸新味'},
       {name:'糸滿魚市場', area:'糸滿市', rating:4.3, type:'food', tags:'海鮮小吃', desc:'南部吃海鮮聖地！販售一盤盤切好的生魚片、焗烤龍蝦。', recommend:'鮮甜干貝串、焗烤明太子龍蝦'},
       {name:'鶏そば屋 いしぐふー', area:'浦添市', rating:4.5, type:'food', tags:'雞白湯沖繩麵', desc:'以極度濃郁鮮甜的「雞白湯」底搭配特製麵條聞名，常大排長龍。', recommend:'特製雞白湯沖繩麵'},
@@ -721,7 +719,7 @@ const DAYS_DATA = [
     ],
     places:[
       {name:'豬肉蛋飯糰 本店', area:'牧志市場', rating:4.4, type:'food', tags:'沖繩飯糰', desc:'最經典的排隊名店，熱騰騰的午餐肉與厚煎蛋完美結合。', recommend:'炸蝦豬肉蛋飯糰'},
-      {name:'沖縄とんかつ小やじ', area:'牧志', rating:4.5, type:'food', tags:'日式炸豬排', desc:'隱身那霸市區的高評價炸豬排專賣店，肉質軟嫩多汁，麵衣金黃酥脆。', recommend:'特選里肌炸豬排定食'},
+      {name:'沖縄とんかつ小やじ', area:'牧志', rating:4.5, type:'food', tags:'日式炸豬排', desc:'隱身那霸市區的高評價炸豬排專專賣店，肉質軟嫩多汁，麵衣金黃酥脆。', recommend:'特選里肌炸豬排定食'},
       {name:'首里蕎麥麵', area:'首里', rating:4.4, type:'food', tags:'手打麵', desc:'首里城周邊極度受歡迎的手打沖繩麵，每日限量賣完為止！', recommend:'限量首里沖繩麵'},
       {name:'琉球茶坊', area:'首里', rating:4.3, type:'food', tags:'琉球庭園料理', desc:'傳統古民家改建，坐在緣廊面對枯山水庭園吃傳統料理，非常有氣氛。', recommend:'墨魚汁炒麵、琉球定食'},
       {name:'市場2樓食堂', area:'牧志市場', rating:4.1, type:'food', tags:'海鮮代工', desc:'一樓挑選生猛海鮮後拿到二樓代客烹調，最接地氣的文化。', recommend:'夜光貝、沖繩近海魚'},
@@ -758,7 +756,7 @@ const PHRASES_DATA = [
   { tag: '👋 日常問候', color: 'sky', tw: '謝謝。', ja: 'ありがとうございます。', romaji: 'Arigatō gozaimasu.', speak: 'ありがとうございます' },
   { tag: '👋 日常問候', color: 'sky', tw: '對不起 / 不好意思。', ja: 'すみません。', romaji: 'Sumimasen.', speak: 'すみません' },
   { tag: '🚗 交通問路', color: 'ocean', tw: '請問車站在哪裡？', ja: '駅はどこですか？', romaji: 'Eki wa doko desu ka?', speak: '駅はどこですか' },
-  { tag: '🚗 交通問路', color: 'ocean', tw: '請載我到這個地址。', ja: 'この住所までお願いします。', romaji: 'Kono jūsho made onegaishimasu.', speak: '開の住所までお願いします' },
+  { tag: '🚗 交通問路', color: 'ocean', tw: '請載我到這個地址。', ja: 'この住所までお願いします。', romaji: 'Kono jūsho made onegaishimasu.', speak: 'こちらの住所までお願いします' },
   { tag: '🏨 飯店住宿', color: 'sand', tw: '我要辦理入住。', ja: 'チェックインをお願いします。', romaji: 'Chekkuin o onegaishimasu.', speak: 'チェックインをお願いします' },
   { tag: '🏨 飯店住宿', color: 'sand', tw: '可以寄放行李嗎？', ja: '荷物を預かってもらえますか？', romaji: 'Nimotsu o azukatte moraemasu ka?', speak: '荷物を預かってもらえますか' },
   { tag: '🍽️ 餐廳點餐', color: 'coral', tw: '不好意思，請給我菜單。', ja: 'すみません、メニューをお願いします。', romaji: 'Sumimasen, menyū o onegaishimasu.', speak: 'すみません、メニューをお願いします' },
@@ -1086,7 +1084,6 @@ window.toggleWishlist = (dayId, placeIndex) => {
   syncWishlistButtons(key);
   renderWishlist();
   
-  // 如果在當前天數或搜尋頁，同步重繪
   if(state.currentView === 'view-day' && state.currentDayId === dayId) {
     renderPlaces(day);
   } else if(state.currentView === 'view-search') {
@@ -1133,7 +1130,7 @@ function renderWishlist() {
       <h4 class="font-heading font-black text-lg text-ink mb-1 pr-8 leading-tight">${w.name}</h4>
       <div class="text-[11px] font-bold text-ink/40 mb-3"><i class="fas fa-map-pin mr-1"></i>${w.area} · ${w.tags}</div>
       <div class="bg-white/50 rounded-xl p-3 text-xs text-ink/80 font-bold mb-4 border border-white shadow-inner-light leading-relaxed"><i class="fas fa-star text-sand mr-1.5"></i>${w.recommend}</div>
-      <a href="https://google.com/maps/search/?api=1&query=${encodeURIComponent(w.name+' '+w.area+' 沖繩')}" target="_blank" class="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-ink text-white text-xs font-bold hover:bg-ink/80 transition shadow-md">
+      <a href="http://maps.google.com/?q=${encodeURIComponent(w.name+' '+w.area+' 沖繩')}" target="_blank" class="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-ink text-white text-xs font-bold hover:bg-ink/80 transition shadow-md">
         <i class="fas fa-map-location-dot"></i> 路線導航
       </a>
     </div>`;
@@ -1200,8 +1197,8 @@ function renderDayView(dayId) {
 
   const mapContainer = document.getElementById('day-map-container');
   if(mapContainer) {
-    const mapQuery = day.itinerary.length > 0 ? day.itinerary[0].q : 'Okinawa';
-    mapContainer.innerHTML = `<iframe width="100%" height="100%" frameborder="0" style="border:0;" loading="lazy" src="https://maps.google.com/maps?q=${encodeURIComponent(mapQuery)}&t=&z=12&ie=UTF8&iwloc=&output=embed"></iframe>`;
+    const mapQuery = day.itinerary.length > 0 ? day.itinerary[2].q : 'Okinawa'; // 使用中部主要節點做預覽
+    mapContainer.innerHTML = `<iframe width="100%" height="100%" frameborder="0" style="border:0;" loading="lazy" src="https://maps.google.com/maps?q=${encodeURIComponent(mapQuery)}&t=&z=11&ie=UTF8&iwloc=&output=embed"></iframe>`;
   }
   
   const tl = document.getElementById('day-timeline');
@@ -1212,7 +1209,7 @@ function renderDayView(dayId) {
       <div class="bg-white/60 border border-white p-4 rounded-2xl shadow-sm hover:bg-white transition-colors duration-300 group">
         <div class="font-mono font-black text-xs mb-1" style="color:${day.hex}">${it.time}</div>
         <div class="font-sans font-black text-sm text-ink mb-2">${it.text}</div>
-        <a href="https://google.com/maps/search/?api=1&query=${encodeURIComponent(it.q)}" target="_blank" class="inline-flex items-center gap-1.5 text-[10px] font-bold text-ink/40 bg-white px-2 py-1 rounded-lg border border-ink/5 hover:text-ink hover:border-ink/20 transition">
+        <a href="http://maps.google.com/?q=${encodeURIComponent(it.q)}" target="_blank" class="inline-flex items-center gap-1.5 text-[10px] font-bold text-ink/40 bg-white px-2 py-1 rounded-lg border border-ink/5 hover:text-ink hover:border-ink/20 transition">
           <i class="fas fa-location-arrow text-[9px]"></i> 導航
         </a>
       </div>
@@ -1228,7 +1225,7 @@ function renderDayView(dayId) {
   
   const mapLinks = document.getElementById('map-links');
   mapLinks.innerHTML = day.itinerary.map((it,i) => `
-    <a href="https://google.com/maps/search/?api=1&query=${encodeURIComponent(it.q)}" target="_blank"
+    <a href="http://maps.google.com/?q=${encodeURIComponent(it.q)}" target="_blank"
       class="flex items-center gap-3 px-4 py-3 bg-white/50 hover:bg-white border border-white rounded-2xl transition text-sm font-bold text-ink shadow-inner-light group">
       <div class="w-8 h-8 rounded-full bg-white shadow-sm flex items-center justify-center border border-ink/5 group-hover:scale-110 transition"><span class="text-sm">${it.icon}</span></div>
       <div class="flex-1">
@@ -1273,7 +1270,7 @@ function renderPlaces(day) {
     const key = `${day.id}-${origIdx}`;
     const isWished = state.wishlist.some(w => w.key === key);
     const tagColor = p.type === 'food' ? 'sand' : 'ocean';
-    const mapUrl = `https://google.com/maps/search/?api=1&query=${encodeURIComponent(p.name+' '+p.area+' 沖繩')}`;
+    const mapUrl = `http://maps.google.com/?q=${encodeURIComponent(p.name+' '+p.area+' 沖繩')}`;
     
     return `<div class="glass-card rounded-3xl p-5 hover:shadow-float border border-white transition-all duration-300 flex flex-col group transform hover:-translate-y-1">
       <div class="flex justify-between items-start mb-3">
@@ -1390,7 +1387,7 @@ function performSearch(query) {
     container.innerHTML = results.map(p => {
       const key = `${p.dayId}-${p.origIdx}`;
       const isWished = state.wishlist.some(w => w.key === key);
-      const mapUrl = `https://google.com/maps/search/?api=1&query=${encodeURIComponent(p.name+' '+p.area+' 沖繩')}`;
+      const mapUrl = `http://maps.google.com/?q=${encodeURIComponent(p.name+' '+p.area+' 沖繩')}`;
       return `<div class="glass-card rounded-3xl p-5 border border-white shadow-sm flex flex-col group transform transition hover:-translate-y-1 hover:shadow-float">
         <div class="flex justify-between items-start mb-3">
           <span class="text-[9px] font-black px-2 py-1 rounded-md text-white shadow-sm uppercase tracking-wider" style="background:${p.dayHex}">Day ${p.dayNum} · ${p.dayDate}</span>
@@ -1464,7 +1461,7 @@ function setupPWA() {
     
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register(swUrl).then(reg => {
-        console.log('PWA Service Worker 註冊安全容錯載入成功');
+        console.log('PWA Service Worker 註冊成功');
       }).catch(err => {
         console.warn('PWA 載入受限:', err);
       });
