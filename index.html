@@ -151,6 +151,9 @@ tailwind.config = {
     <button class="nav-btn sidebar-btn w-full text-left px-4 py-3 rounded-2xl hover:bg-white/60 transition-all flex items-center gap-3 text-ink/60" data-target="view-wishlist">
       <div class="w-7 h-7 rounded-full bg-coral/20 flex items-center justify-center"><i class="fas fa-heart text-coral text-xs"></i></div> 我的收藏清單
     </button>
+    <button class="nav-btn sidebar-btn w-full text-left px-4 py-3 rounded-2xl hover:bg-white/60 transition-all flex items-center gap-3 text-ink/60" data-target="view-rainy-backup">
+      <div class="w-7 h-7 rounded-full bg-ocean/20 flex items-center justify-center"><i class="fas fa-umbrella text-ocean text-xs"></i></div> 雨天備案與精選30選
+    </button>
     <button class="nav-btn sidebar-btn w-full text-left px-4 py-3 rounded-2xl hover:bg-white/60 transition-all flex items-center gap-3 text-ink/60" data-target="view-phrases">
       <div class="w-7 h-7 rounded-full bg-sky/20 flex items-center justify-center"><i class="fas fa-language text-sky text-xs"></i></div> 實用日文小卡
     </button>
@@ -450,6 +453,26 @@ tailwind.config = {
     <div id="wishlist-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
   </section>
 
+  <section id="view-rainy-backup" class="view-section max-w-5xl mx-auto">
+    <div class="mb-8">
+      <div class="inline-flex items-center gap-2 px-3 py-1 bg-ocean/10 text-ocean rounded-full font-heading text-xs font-bold mb-3 border border-ocean/20">
+        <i class="fas fa-cloud-showers-heavy"></i> Rain or Shine
+      </div>
+      <h2 class="font-heading font-black text-4xl text-ink mb-2 tracking-tight">雨天備案與市區精選 30 選</h2>
+      <p class="text-ink/60 font-medium">不論下雨或大太陽都不掃興！嚴選沖繩 30 間頂級質感選物、室內景品與美食指標。</p>
+    </div>
+
+    <div class="flex gap-2 overflow-x-auto no-scroll mb-6 pb-2 px-1">
+      <button class="rainy-tab px-5 py-2.5 text-xs font-bold rounded-full bg-ink text-white shadow-md transition flex-shrink-0" onclick="filterRainyGrid('all', this)">全部 30 選</button>
+      <button class="rainy-tab px-5 py-2.5 text-xs font-bold rounded-full bg-white/60 text-ink/60 hover:bg-white border border-white transition flex-shrink-0" onclick="filterRainyGrid('select', this)"><i class="fas fa-store mr-1 text-ocean"></i> 質感選物 (10選)</button>
+      <button class="rainy-tab px-5 py-2.5 text-xs font-bold rounded-full bg-white/60 text-ink/60 hover:bg-white border border-white transition flex-shrink-0" onclick="filterRainyGrid('food', this)"><i class="fas fa-utensils mr-1 text-sand"></i> 美食指標 (10選)</button>
+      <button class="rainy-tab px-5 py-2.5 text-xs font-bold rounded-full bg-white/60 text-ink/60 hover:bg-white border border-white transition flex-shrink-0" onclick="filterRainyGrid('indoor', this)"><i class="fas fa-building mr-1 text-coral"></i> 室內雨備 (10選)</button>
+    </div>
+
+    <div id="rainy-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+    </div>
+  </section>
+
   <section id="view-phrases" class="view-section max-w-5xl mx-auto">
     <div class="mb-8">
       <h2 class="font-heading font-black text-4xl text-ink mb-2 tracking-tight">急救日文小卡 🗣️</h2>
@@ -541,6 +564,9 @@ tailwind.config = {
   <button class="nav-btn mobile-btn snap-center flex-shrink-0 flex items-center justify-center gap-2 px-5 py-3 rounded-full text-ink/50 font-bold transition-all" data-target="view-phrases">
     <i class="fas fa-language text-sky text-lg"></i> <span class="text-sm tracking-wide">日文</span>
   </button>
+  <button class="nav-btn mobile-btn snap-center flex-shrink-0 flex items-center justify-center gap-2 px-5 py-3 rounded-full text-ink/50 font-bold transition-all" data-target="view-rainy-backup">
+    <i class="fas fa-umbrella text-ocean text-lg"></i> <span class="text-sm tracking-wide">雨備</span>
+  </button>
   
   <div class="w-px h-8 bg-ink/10 flex-shrink-0 mx-1"></div>
   <div id="mobile-day-btns" class="flex gap-2"></div>
@@ -557,7 +583,18 @@ const DAYS_DATA = [
     title:'啟程與抵達那霸',
     subtitle:'出發前往度假天堂！抵達辦理入住後，首日晚沉浸在國際通的熱鬧氛圍。',
     intro:'抵達沖繩的第一天，重點在於安頓與感受市區活力。包含機場到市區動線，以及國際通周邊不可錯過的美食與宵夜選擇。',
-    tips:['⚠️ 注意日本靠左行駛！租車前再確認一次','💴 機場有換錢所，但匯率可能略差，建議台灣換好','📶 入境後立刻開啟網路卡確認可用','🧳 行李可寄放機場，輕裝到國際通逛更舒適'],
+    tips:[
+      '⚠️ 日本駕駛全面靠左行駛，轉彎時請默念「左小彎、右大彎」，雨天請加倍跟車距離。',
+      '💴 機場設有換匯所，但匯率普遍較差，建議在台灣先換好少量現鈔，其餘刷卡。',
+      '📶 入境那霸機場後，請務必先在航廈內開啟並測試網卡/eSIM，確認網路暢通再過海關。',
+      '🧳 首日若提早抵達或想空手逛街，那霸機場國內線及航廈 2 樓均設有大型投幣式行李置物櫃。',
+      '🚝 單軌電車（Yui Rail）起站為那霸機場，支援使用 IC 卡（如 Suica、ICOCA）直接感應進站。',
+      '🏨 抵達 Hotel Strata Naha 辦理入住時，請準備好所有入住旅客的護照正本以供櫃檯掃描留存。',
+      '🛍️ 國際通許多藥妝店營業至深夜，但退稅櫃檯（Tax-Free）通常會提早休息，購物時請留意時間。',
+      '🇯🇵 日本店家非常注重禮貌，進入居酒屋或鄉土料理店時，請靜候店員前來帶位，勿自行入座。',
+      '💴 部分市區傳統老店或屋台（如屋台村）僅接受現金支付，身上請務必留有足夠的日圓現鈔。',
+      '🌙 沖繩夏日早晚溫差雖小，但室內冷氣普遍強勁，首日散步建議隨身攜帶一件透氣薄外套。'
+    ],
     itinerary:[
       {time:'16:15', text:'高雄國際機場 (IT728起飛)', icon:'🛫', q:'高雄國際機場 KHH'},
       {time:'18:40', text:'那霸機場 (OKA) 抵達', icon:'🛬', q:'那霸機場'},
@@ -592,7 +629,18 @@ const DAYS_DATA = [
     title:'中北部與美國村（精采夜生活秀）',
     subtitle:'早晨走訪安良波海灘，體驗青洞潛水，漫遊美國村與 Rycom 血拚，深夜返回市區體驗震撼 showCLUB 演出。',
     intro:'第二天行程豐富！離開市區感受中部風情，涵蓋海灘漫步、水下體驗與大型商場血拚，午夜前返回那霸市區觀賞熱血澎湃的日本頂級舞台歌舞秀。',
-    tips:['🤿 潛水前一晚不要飲酒，早餐吃清淡','🚗 美國村停車場週末很搶手，可停稍遠的停車場再走過來','🛒 Rycom 規模大品牌多，退稅排隊較久，請拿捏好返回市區的時間','💃 Churasun 6 秀場於 22:30 準時開演，建議提早 15-20 分鐘抵達現場換卡核銷'],
+    tips:[
+      '🤿 參加黑潮潛水（青洞）前一晚嚴禁過度飲酒；當日早餐請以清淡為主，避免因風浪導致反胃。',
+      '🚗 美國村週末及傍晚的免費停車場非常熱門，若核心區客滿，可將車輛停至較外圍的北谷町營停車場。',
+      '🛒 AEON MALL Rycom 佔地極廣且品牌眾多，退稅手續需至 1 樓免稅櫃檯統一辦理，排隊時間較長，請預留充足時間。',
+      '💃 Churasun 6 秀場於 22:30 準時開演（第二場），建議提早 15-20 分鐘抵達現場換卡核銷並安排座位。',
+      '✨ Churasun 6 票價已含 10 張互動小費券，若想給表演者更多支持，可在現場額外兌換專用小費。',
+      '🚗 自駕行經恩納村國道 58 號線時，沿途常有定點測速照相，請嚴格遵守速限（通常為 50-60 km/h）。',
+      '☕ BANTA CAFE 為星野集團經營之絕景咖啡廳，戶外崖邊榻榻米座位非常搶手，建議一抵達先尋找座位再點餐。',
+      '🍲 晚餐 Itoya 阿古豬火鍋極為熱門，若無提前預約，建議在非尖峰時段前去碰碰運氣或提早排隊。',
+      '📱 自駕導航時，若車載導航不熟悉，建議同時開啟 Google Maps 作為輔助，並輸入店家的 MapCode 或電話號碼。',
+      '🌙 深夜自駕返回那霸市區時，市區道路較狹窄且部分路段有單行道限制，請放慢車速並專注路況。'
+    ],
     itinerary:[
       {time:'08:30', text:'搭車前往那霸機場', icon:'🚕', q:'那霸機場'},
       {time:'09:00', text:'Kuruca租車 取車', icon:'🚗', q:'沖繩縣豐見城市我那霸295-4'},
@@ -635,7 +683,18 @@ const DAYS_DATA = [
     title:'北部絕景與煙火',
     subtitle:'一路向北！許田休息站、古宇利島，下午美麗海水族館，晚上絢爛煙火。',
     intro:'深入沖繩北部，最清澈的海水(古宇利島)與必訪的美麗海水族館。傍晚留在海洋博公園享受夏日煙火。',
-    tips:['🅿️ 煙火停車場A・B：14:00開放，請導航至「Lawson海洋博公園前店」轉進町道16號線，循指標入場轉乘接駁車','🐳 鯨鯊餵食時間通常是10:00、14:00，可事先查詢當日時間','🎆 煙火大會已預約「棧敷席A(遊玩濱)」，記得手機出示VELTRA憑證','🚗 煙火結束後道路非常擁擠，接駁車營運至23:00，可稍作停留避開人潮'],
+    tips:[
+      '🎆 煙火大會當日實施大規模交通管制。已預約停車場 A・B 的車主，請導航至「Lawson 海洋博公園前店」轉進町道 16 號線，循專屬指標入場。',
+      '🅿️ 停車場 A・B 於 14:00 正式開放，入場後需憑 VELTRA 憑證換取停車證，並搭乘大會提供的免費接駁車前往會場。',
+      '🐳 美麗海水族館當日人潮眾多，招牌鯨鯊餵食秀通常在 15:00 與 17:00（請以當日官網為準），建議提早 20 分鐘到黑潮之海大水槽前佔位。',
+      '🎆 煙火觀賞區為「棧敷席 A（遊玩濱）」，屬於沙灘地墊席，建議自備防水野餐墊或濕紙巾以便入座。',
+      '🚗 煙火結束後散場人潮可達數萬人，周邊道路將極度擁擠。大會接駁車營運至 23:00，建議在座位上稍作休息、避開第一波離場車潮。',
+      '🏪 道之驛許田休息站是購買北部景點優惠門票（如水族館）與享用在地小吃（如炸鮮奶饅頭）的最佳補給站。',
+      '🏝️ 古宇利大橋兩側海色在上午 11:00 至下午 14:00 陽光直射時最為漸層湛藍，是最佳的拍攝時間。',
+      '🍤 Kouri Shrimp 蒜香蝦常需排隊 30 分鐘以上，可指派一人先下車點餐，其餘人將車停至專屬停車場。',
+      '🧴 北部戶外紫外線極強，海灘完全無遮蔽物，請務必每 2 小時補擦防曬乳，並配戴太陽眼鏡。',
+      '🔋 因當日包含水族館拍照與深夜煙火錄影，手機耗電極快，出門前請務必帶足高容量行動電源。'
+    ],
     itinerary:[
       {time:'08:00', text:'那霸出發北上', icon:'🚗', q:'Hotel Strata Naha'},
       {time:'10:04', text:'道の駅 許田休息站', icon:'🏪', q:'道の駅 許田 開護'},
@@ -670,7 +729,18 @@ const DAYS_DATA = [
     title:'地底奇景與血拚',
     subtitle:'早上探索壯麗鐘乳石「玉泉洞」，下午前往PARCO CITY享用敘敘苑並盡情購物。',
     intro:'涵蓋南部大自然奇景與西海岸超大型購物中心。玉泉洞能讓您探索沖繩地底奧秘，隨後前往PARCO CITY品嚐頂級燒肉。',
-    tips:['🦇 玉泉洞內溫度約18-20°C，帶件薄外套','📸 玉泉洞禁止使用閃光燈拍照','🥩 敘敘苑建議網路訂位，午餐時段人氣非常高','🛍️ PARCO CITY 免稅申請需當日同一商店滿¥5,000'],
+    tips:[
+      '🦇 玉泉洞內為天然鐘乳石洞，終年潮濕且地面常有積水、階梯濕滑，請務必穿著防滑效果佳的布鞋或涼鞋。',
+      '📸 玉泉洞內部基於安全與生態保護，全面禁止使用相機閃光燈，建議開啟手機夜景模式拍攝。',
+      '🥩 敘敘苑浦添 PARCO CITY 店極度熱門，雖可現場排隊，但強烈建議提前透過官網預訂面海的景觀座位。',
+      '🛍️ PARCO CITY 免稅門檻為當日同一商家消費滿 ¥5,000（不含稅），部分專櫃需至商場 1 樓免稅櫃檯統一退稅。',
+      '🧥 玉泉洞內溫度長年維持在 18-20°C 左右，與室外夏日高溫溫差大，進入前請穿上隨身攜帶的薄外套。',
+      '🚗 南部著名的海景咖啡廳（如濱邊的茶屋）車位較少，若遇客滿，需在現場登記候位並於車內耐心等候。',
+      '☕ Cave Cafe 位於天然鐘乳石洞內，這裡販售沖繩限定的 35 COFFEE（珊瑚烘焙咖啡），極具特色。',
+      '🐈 天婦羅名店多集中在奧武島，島上貓咪眾多，自駕開車慢行時請特別留意路邊與車底的小動物。',
+      '🛒 PARCO CITY 內部動線寬敞，聚集了大量日系服飾、戶外用品與文具雜貨，建議保留至少 3-4 小時以免逛得太倉促。',
+      '🚗 傍晚從浦添西海岸返回那霸市區的國道 58 號線容易塞車，請提早規劃出發時間以利後續行程。'
+    ],
     itinerary:[
       {time:'09:00', text:'那霸出發南下', icon:'🚗', q:'Hotel Strata Naha'},
       {time:'09:33', text:'玉泉洞 (王國村)', icon:'🦇', q:'玉泉洞 沖繩'},
@@ -704,7 +774,18 @@ const DAYS_DATA = [
     title:'市區巡禮與賦歸',
     subtitle:'早上走訪牧志市場與首里城，品嚐炸豬排後前往機場準備返台。',
     intro:'最後一天體驗在地市井文化與歷史古蹟。從牧志市場的早晨開始，走訪首里城，最後至機場採購伴手禮，完美句點。',
-    tips:['⏰ 首里城開放時間：8:30-19:00（7月）','🦀 牧志市場1樓挑好活海鮮，拿到2樓代烹，服務費每人約300円','✈️ 建議至少提前2.5小時到那霸機場（國際線）','🛍️ 機場免稅店可以排最後血拚，抵達後先check-in'],
+    tips:[
+      '⏰ 首里城正殿目前正在進行復原重建工程（預計2026年完工），現場設有透明觀摩步道，可近距離觀看工匠修復過程。',
+      '🦀 第一牧志公設市場 1 樓挑選海鮮並上 2 樓代烹時，店家會收取固定的烹調服務費（每人約 300-500 円不等）。',
+      '🍙 Pork Tamago Onigiri 牧志市場本店清晨即開始排隊，若想節省時間，可多利用官方 App 提前線上預定點餐。',
+      '✈️ 因那霸機場國際線出境審查與免稅品核銷常出現排隊人潮，強烈建議至少在起飛前 2.5 小時抵達機場。',
+      '🚗 Kuruca 租車還車前，請務必至租車公司指定的臨近加油站「將油箱加滿」，並保留加油收據以供還車時查驗。',
+      '🏯 首里城公園位於丘陵上，從停車場走到主建築群需要步行大量階梯與石板路，請穿著舒適好走的鞋子。',
+      '🍱 沖縄とんかつ小やじ 的座位數較少，午餐時段一到很快就會客滿，建議在開店前 10 分鐘前去排隊。',
+      '🛍️ 那霸機場國內線航廈的伴手禮店種類比國際線航廈齊全許多，建議辦理完登機手續後，走聯絡通道過去國內線最後補貨。',
+      '⚠️ 購買如「生紅芋塔」等特殊伴手禮時，請確認是否需要全程冷藏，並可在機場加購保冷袋。',
+      '✈️ 登機前請再次確認手提行李與隨身液體限制（每瓶不超過 100ml，需裝入透明夾鏈袋），將行動電源留在隨身包中。'
+    ],
     itinerary:[
       {time:'09:00', text:'Hotel Strata Naha (退房)', icon:'🏨', q:'Hotel Strata Naha'},
       {time:'09:45', text:'第一牧志公設市場', icon:'🦀', q:'第一牧志公設市場'},
@@ -765,6 +846,45 @@ const PHRASES_DATA = [
   { tag: '🛍️ 購物結帳', color: 'mint', tw: '可以用信用卡嗎？', ja: 'クレジットカードは使えますか？', romaji: 'Kurejitto kādo wa tsukaemasu ka?', speak: 'クレジットカードは使えますか' }
 ];
 
+// ===================== RAINY & SELECT 30 DATA =====================
+const RAINY_BACKUP_DATA = [
+  // 1-10: 質感選物 (select)
+  { name: 'D&DEPARTMENT OKINAWA', type: 'select', tags: '工業設計/長效選物', area: '宜野灣市', desc: '以「Long Life Design」為理念，挖掘沖繩在地傳承的工藝道具、琉璃、陶器與生活雜貨。', recommend: '沖繩傳統 Yachimun 陶器' },
+  { name: 'tituti OKINAWAN CRAFT', type: 'select', tags: '現代工藝/紅型染', area: '國際通周邊', desc: '由沖繩在地四位不同領域的工藝家共同經營，將傳統紅型染與織物融入現代設計。', recommend: '設計師款陶製杯器' },
+  { name: 'PORTRIVER MARKET', type: 'select', tags: '美軍外人住宅/生活雜貨', area: '浦添市', desc: '隱身在港川外人住宅區，店主品味極佳，蒐集了沖繩各地精緻手作餐具與文創伴手禮。', recommend: '手工琉璃杯、在地烘焙咖啡豆' },
+  { name: '樂園百貨店 (Ryukyu Department)', type: 'select', tags: '精品百貨/沖繩在地選品', area: '縣廳前 (琉貿百貨1F)', desc: '精選沖繩最頂級的工藝品、化妝品與有機食品，是室內吹冷氣、雨天吹不到的最佳質感購物點。', recommend: '沖繩精釀琴酒、在地天然香氛' },
+  { name: 'Luft shop', type: 'select', tags: '極簡文具/生活道具', area: '那霸市區', desc: '空間極具設計感的選物小店，販售線條俐落、充滿生活美學的日常器皿與設計師文具。', recommend: '極簡設計不鏽鋼餐具' },
+  { name: '壺屋陶器街選物 (Sprout)', type: 'select', tags: '複合式選物/陶藝咖啡', area: '壺屋陶器街', desc: '將沖繩傳統陶藝 Yachimun 與現代咖啡選物結合的藝廊空間，下雨天在室內挑選非常愜意。', recommend: '特色手作咖啡濾杯' },
+  { name: 'SuiSavon 首里石鹼 - 國際通概念店', type: 'select', tags: '天然藥妝/手作香皂', area: '國際通', desc: '使用沖繩在地精選植物與水果萃取製作的護膚品牌，香氣充滿濃郁的南方海島度假感。', recommend: '經典爆水琉球白潔顏泥' },
+  { name: 'chahat おきなわ', type: 'select', tags: '手作皮革/異國織物', area: '南城市', desc: '充滿波西米亞島嶼風情的異國服飾與手工皮革選物店，其獨特品味吸引大量選物控前來。', recommend: '手工揉製帆布皮革包' },
+  { name: 'mofgmona no zakka', type: 'select', tags: '山坡上的陶器選物店', area: '宜野灣市', desc: '一整間店擺滿了沖繩數十位陶藝作家的作品，品項極為齊全，宛如一座小型的陶藝博物館。', recommend: '在地新銳作家手繪陶盤' },
+  { name: '玩具ロードワークス (Toy Roadworks)', type: 'select', tags: '傳統玩偶/創意紙偶', area: '那霸市區', desc: '由琉球傳統紙張工藝師經營，將傳統玩偶結合現代幽默、極具惡趣味的獨特選物店。', recommend: '琉球風創意雙六紙牌、手繪紙偶' },
+
+  // 11-20: 美食指標 (food)
+  { name: '敘敘苑 浦添 PARCO CITY 店', type: 'food', tags: '頂級燒肉/雨天無痛首選', area: '浦添市', desc: '日本頂級燒肉指標，雨天躲在 PARCO CITY 購物商場內，一邊隔著落地窗看雨中海景一邊品嚐和牛。', recommend: '超值午間燒肉套餐' },
+  { name: '琉球茶坊 Ashibiuna', type: 'food', tags: '古民家/庭園琉球料理', area: '首里城周邊', desc: '傳統沖繩古民家改建，室內榻榻米座位面對精緻的枯山水庭園，雨天聽著雨落庭院極具詩意。', recommend: '墨魚汁炒麵定食、琉球御膳' },
+  { name: '沖縄とんかつ小やじ', type: 'food', tags: '頂級炸豬排/排隊名店', area: '牧志市場周邊', desc: '隱身在那霸市區巷弄，職人精神打造的金黃酥脆炸豬排，肉質飽滿多汁，老饕一致推崇。', recommend: '特選里肌炸豬排定食' },
+  { name: '傑克牛排館 (Jack\'s Steak House)', type: 'food', tags: '美式昭和/24H懷舊風味', area: '旭橋站', desc: '開拓沖繩牛排文化的始祖！美式復古車廂裝潢，就算外面下大雨，室內依舊香氣四溢、熱氣騰騰。', recommend: '特選烤牛排 (Tenderloin)' },
+  { name: 'oHacorte 港川店', type: 'food', tags: '水果塔專賣/老屋甜點', area: '浦添市', desc: '沖繩精緻水果塔絕對指標，精選時令鮮果搭配酥脆塔皮，雨天在老木屋內享用下午茶極為療癒。', recommend: '綜合水果塔、香檸酸塔' },
+  { name: '黑糖可麗露 ほうき星 (Houkiboshi)', type: 'food', tags: '精品甜點/打卡伴手禮', area: '港川外人住宅', desc: '使用多良間島黑糖製作的迷你可麗露，外皮焦脆內裡Q彈，口味融合沖繩在地食材。', recommend: '黑糖原味、沖繩香檸可麗露' },
+  { name: 'ゆうなんぎい (Yunangi)', type: 'food', tags: '50年老字號/沖繩鄉土居酒屋', area: '國際通', desc: '開業半世紀的道地家庭料理居酒屋，其東坡肉與炒苦瓜被譽為市區天花板等級。', recommend: '沖繩東坡肉 (Rafute)、苦瓜炒豆腐' },
+  { name: '雞そば屋 いしぐふー', type: 'food', tags: '原創雞白湯/蕎麥麵創新', area: '浦添市', desc: '打破傳統鰹魚高湯框架，以極致濃郁的在地原產雞白湯頭搭配特製手打麵，深受在地人喜愛。', recommend: '特製雞白湯沖繩麵' },
+  { name: 'C&C Breakfast Okinawa', type: 'food', tags: '夏威夷早午餐/網美舒芙蕾', area: '牧志市場周邊', desc: '打著「旅行中的美味早餐」招牌，精緻的巴西莓果碗與空氣感舒芙蕾鬆餅，為雨天早晨帶來好心情。', recommend: '夏威夷堅果醬舒芙蕾鬆餅' },
+  { name: 'Zhyvago Coffee Works Okinawa', type: 'food', tags: '工業風美式/無敵海景咖啡', area: '美國村', desc: '西海岸最酷的西岸美式咖啡館！雨天坐在大片玻璃窗前的沙發位，看著灰色大海聽著黑膠十分有氛圍。', recommend: '手沖單品咖啡、手工重乳酪蛋糕' },
+
+  // 21-30: 室內雨備 (indoor)
+  { name: 'DMM Kariyushi 水族館', type: 'indoor', tags: '影像科技/動態水族館', area: '豐見城市 (iias商場內)', desc: '結合現代投影科技與聲光視覺的全新形態水族館，全室內空調且動線精美，與美麗海風格截然不同。', recommend: '透明玻璃地板水槽俯瞰體驗' },
+  { name: 'SAN-A 浦添西海岸 PARCO CITY', type: 'indoor', tags: '沖繩最大商城/全天候血拚', area: '浦添市', desc: '全沖繩最新、品牌最齊全的沿海購物中心。完全不用淋雨，吃喝玩樂、精品服飾與生活家電一站搞定。', recommend: '1樓日系潮流服飾區、免稅服務台' },
+  { name: '永旺夢樂城沖繩來客夢 (AEON MALL Rycom)', type: 'indoor', tags: '超大型複合商城/兒童天堂', area: '北中城村', desc: '中部最大巨型購物商場，中庭擁有超大觀賞水族箱，室內店家極多，是中北部最強的雨天避難所。', recommend: 'BIC CAMERA 家電補貨、巨大水族缸看魚' },
+  { name: '沖繩縣立博物館・美術館 (OkiMu)', type: 'indoor', tags: '現代建築/沖繩歷史藝廊', area: '那霸新都心', desc: '仿造琉球傳統城堡（Gusuku）外觀設計的純白巨型建築。內部冷氣舒適，雨天深入探索琉球文化首選。', recommend: '博物館常設展、美術館當期特展' },
+  { name: '玉泉洞 (王國村室內鐘乳石)', type: 'indoor', tags: '地底奇景/天然雨備', area: '南城市', desc: '日本三大鐘乳石洞之一。由於整條參觀路線完全位於「地底下」，地表下大雨完全不影響洞內壯麗奇景。', recommend: '青之泉（夢幻藍色鐘乳石水潭）' },
+  { name: '第一牧志公設市場', type: 'indoor', tags: '在地市井/海鮮代工棚頂市場', area: '國際通周邊', desc: '全新改建完工的現代化棚頂傳統市場，乾淨無異味且完全不淋雨，可在 1 樓選海鮮直接上 2 樓現煮。', recommend: '夜光貝生魚片、清蒸沖繩近海魚' },
+  { name: 'Blue Seal 冰淇淋歷史博物館 (Ice Park)', type: 'indoor', tags: '觀光工廠/手作DIY體驗', area: '浦添市', desc: '沖繩標誌性冰淇淋品牌的室內主題館，可以吹冷氣了解品牌歷史，還能報名體驗親手製作專屬冰棒。', recommend: '手作客製化冰淇淋棒體驗 (需預約)' },
+  { name: '首里城 繫流館與室內展示區', type: 'indoor', tags: '古蹟修復觀摩/文化講座', area: '首里城公園', desc: '首里城設有完善的室內復原展示館，雨天可沿著室內動線觀摩大木匠如何運用傳統工法重建正殿。', recommend: '正殿工程透明觀摩步道' },
+  { name: 'iias 沖繩豐崎購物中心', type: 'indoor', tags: '臨海綜合商城/機場周邊', area: '豐見城市', desc: '緊鄰 DMM 水族館的超大型室內購物中心，內部還有室內主題樂園與免稅藥妝，適合排在最後一天或雨天。', recommend: 'Loft 選物店、免稅特販區' },
+  { name: 'HAPiNAHA / 國際通室內街區', type: 'indoor', tags: '棚頂商店街/雨天散步', area: '國際通', desc: '國際通核心的分支商店街（如平和通、市場中央通）均設有全覆蓋式的「拱頂天棚」，大雨也能不撐傘逛街。', recommend: '塩屋（沖繩海鹽雪鹽冰淇淋）' }
+];
+
 // ===================== STATE =====================
 let state = {
   currentView: 'view-overview',
@@ -788,6 +908,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initNotes();
   renderPhrases();
   renderWishlist();
+  initRainyBackupGrid();
   setupPWA();
   
   document.querySelector('.sidebar-btn[data-target="view-overview"]')?.classList.add('active-sidebar');
@@ -1177,6 +1298,63 @@ window.speakJapanese = (text) => {
     window.speechSynthesis.speak(utterance);
   } else {
     showToast('您的裝置不支援語音朗讀功能');
+  }
+};
+
+// ===================== RAINY LOGIC =====================
+function initRainyBackupGrid() {
+  const grid = document.getElementById('rainy-grid');
+  if(!grid) return;
+  renderRainyItems(RAINY_BACKUP_DATA);
+}
+
+function renderRainyItems(data) {
+  const grid = document.getElementById('rainy-grid');
+  if(!grid) return;
+  
+  grid.innerHTML = data.map((p, idx) => {
+    let tagColor = 'ocean';
+    if(p.type === 'food') tagColor = 'sand';
+    if(p.type === 'indoor') tagColor = 'coral';
+    
+    const mapUrl = `http://maps.google.com/?q=${encodeURIComponent(p.name + ' ' + p.area + ' 沖繩')}`;
+    
+    return `<div class="glass-card rounded-3xl p-5 hover:shadow-float border border-white transition-all duration-300 flex flex-col group transform hover:-translate-y-1">
+      <div class="flex justify-between items-start mb-3">
+        <div class="flex-1 min-w-0 pr-3">
+          <div class="text-[9px] font-black uppercase tracking-widest mb-1.5 text-ink/40"><i class="fas fa-map-pin mr-1 opacity-70"></i>${p.area}</div>
+          <h4 class="font-heading font-black text-lg text-ink leading-tight mb-2">${p.name}</h4>
+          <span class="inline-block text-[9px] font-black uppercase tracking-wider bg-${tagColor}/10 text-${tagColor} px-2 py-1 rounded-md border border-${tagColor}/20">${p.tags}</span>
+        </div>
+        <div class="flex items-center gap-1.5 flex-shrink-0 flex-col">
+          <div class="bg-white/80 border border-white shadow-inner-light text-ink/40 font-mono font-black text-[10px] px-2 py-1 rounded-lg flex items-center gap-0.5">
+            雨備 <i class="fas fa-umbrella text-ocean text-[8px] pb-px"></i>
+          </div>
+        </div>
+      </div>
+      <p class="font-serif text-xs text-ink/70 mb-4 flex-1 leading-relaxed font-medium">${p.desc}</p>
+      <div class="bg-white/50 border border-white shadow-inner-light p-3 rounded-2xl mb-4">
+        <div class="text-[9px] font-black uppercase tracking-widest mb-1 text-ocean opacity-70"> must try / select </div>
+        <div class="text-xs font-sans font-bold text-ink leading-relaxed">${p.recommend}</div>
+      </div>
+      <a href="${mapUrl}" target="_blank" class="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-ink text-white text-xs font-bold hover:bg-ink/80 transition shadow-md group-hover:shadow-lg">
+        <i class="fas fa-location-arrow"></i> Google Maps
+      </a>
+    </div>`;
+  }).join('');
+}
+
+window.filterRainyGrid = (type, btn) => {
+  document.querySelectorAll('.rainy-tab').forEach(b => {
+    b.className = 'rainy-tab px-5 py-2.5 text-xs font-bold rounded-full bg-white/60 text-ink/60 hover:bg-white border border-white transition flex-shrink-0';
+  });
+  btn.className = 'rainy-tab px-5 py-2.5 text-xs font-bold rounded-full bg-ink text-white shadow-md transition flex-shrink-0';
+
+  if(type === 'all') {
+    renderRainyItems(RAINY_BACKUP_DATA);
+  } else {
+    const filtered = RAINY_BACKUP_DATA.filter(p => p.type === type);
+    renderRainyItems(filtered);
   }
 };
 
